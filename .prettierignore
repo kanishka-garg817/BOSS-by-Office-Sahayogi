@@ -1,0 +1,11 @@
+node_modules
+.next
+.turbo
+dist
+coverage
+pnpm-lock.yaml
+packages/db/drizzle
+next-env.d.ts
+
+# Third-party animation data, kept minified as downloaded
+apps/web/public/animations

@@ -1,0 +1,4 @@
+{
+  "extends": "@boss/config/tsconfig/library.json",
+  "include": ["src", "drizzle.config.ts", "eslint.config.mjs"]
+}

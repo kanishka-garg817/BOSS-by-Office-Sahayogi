@@ -1,0 +1,684 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+@theme inline {
+  --color-app-bg: var(--app-bg);
+  --color-app-card: var(--app-card);
+  --color-app-soft: var(--app-soft);
+  --color-app-ink: var(--app-ink);
+  --color-app-muted: var(--app-muted);
+  --color-app-line: var(--app-line);
+  --color-app-blue: var(--app-blue);
+  --color-app-blue-soft: var(--app-blue-soft);
+  --color-app-green: var(--app-green);
+  --color-app-green-soft: var(--app-green-soft);
+  --color-app-amber: var(--app-amber);
+  --color-app-amber-soft: var(--app-amber-soft);
+  --color-app-violet: var(--app-violet);
+  --color-app-violet-soft: var(--app-violet-soft);
+  --color-app-red: var(--app-red);
+  --color-app-red-soft: var(--app-red-soft);
+  --color-app-teal: var(--app-teal);
+  --color-app-teal-soft: var(--app-teal-soft);
+}
+
+@theme {
+  /* Text, hairlines and subtle fills. Dark navy on light, near-white on dark. */
+  --color-ink: #001f4d;
+  /* The page itself, and the cards, menus and panels that sit on it. */
+  --color-canvas: #ffffff;
+  --color-surface: #ffffff;
+  --color-brand-navy: #001f4d;
+  --color-brand-blue: #0066ff;
+  --color-brand-light: #9cc3ff;
+  --color-brand-tint: #eef4ff;
+
+  --animate-float: float 3s ease-in-out infinite;
+  --animate-orbit-sweep: orbit-sweep 10s linear infinite;
+  --animate-orbit-sweep-reverse: orbit-sweep-reverse 14s linear infinite;
+  --animate-caption-cycle: caption-cycle 16s ease-in-out infinite both;
+  --animate-orbit-pulse: orbit-pulse 3.2s ease-out infinite;
+  --animate-orbit-pulse-late: orbit-pulse 3.2s ease-out 1.6s infinite;
+  --animate-scan: scan 1.6s ease-in-out infinite;
+  --animate-marquee: marquee 80s linear infinite;
+  --animate-workflow-step: workflow-step-in 0.45s ease-out both;
+  --animate-workflow-draw-x: workflow-draw-x 0.5s ease-out both;
+  --animate-workflow-draw-y: workflow-draw-y 0.5s ease-out both;
+  --animate-workflow-arrive: workflow-arrive 0.8s ease-out both;
+  --animate-workflow-pulse-x: workflow-pulse-x 0.9s ease-in-out both;
+  --animate-workflow-pulse-y: workflow-pulse-y 0.9s ease-in-out both;
+  --animate-orbit-outer: orbit-spin 120s linear infinite;
+  --animate-orbit-outer-upright: orbit-spin-reverse 120s linear infinite;
+  --animate-orbit-inner: orbit-spin-reverse 80s linear infinite;
+  --animate-orbit-inner-upright: orbit-spin 80s linear infinite;
+  --animate-flow-dot: flow-dot 1.8s linear infinite;
+  --animate-shine: shine 4.5s ease-in-out infinite;
+  --animate-phone-sway: phone-sway 7s ease-in-out infinite;
+  --animate-reveal: reveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+
+  /* A bright arc travelling around an ellipse whose path length is normalised to 1000. */
+  @keyframes orbit-sweep {
+    to {
+      stroke-dashoffset: -1000;
+    }
+  }
+
+  @keyframes orbit-sweep-reverse {
+    from {
+      stroke-dashoffset: -1000;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  @keyframes orbit-pulse {
+    0% {
+      opacity: 0.45;
+      transform: scale(1);
+    }
+    100% {
+      opacity: 0;
+      transform: scale(1.7);
+    }
+  }
+
+  /* One line out of four: in, hold, out, then wait for the other three. */
+  @keyframes caption-cycle {
+    0% {
+      opacity: 0;
+      transform: translateY(0.4rem);
+    }
+    3%,
+    22% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    25%,
+    100% {
+      opacity: 0;
+      transform: translateY(-0.4rem);
+    }
+  }
+
+  @keyframes scan {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(4rem);
+    }
+  }
+
+  @keyframes marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  /* A workflow step easing into place when a workflow is chosen on the Modules page. */
+  @keyframes workflow-step-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* The line between two workflow steps filling in, in the direction of the journey. */
+  @keyframes workflow-draw-x {
+    from {
+      transform: scaleX(0);
+    }
+
+    to {
+      transform: scaleX(1);
+    }
+  }
+
+  @keyframes workflow-draw-y {
+    from {
+      transform: scaleY(0);
+    }
+
+    to {
+      transform: scaleY(1);
+    }
+  }
+
+  /* A soft highlight settling on the last step of a workflow. */
+  @keyframes workflow-arrive {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  /* A small dot that passes once from one workflow step to the next. */
+  @keyframes workflow-pulse-x {
+    0% {
+      opacity: 0;
+      transform: translateX(-10px);
+    }
+
+    30%,
+    70% {
+      opacity: 1;
+    }
+
+    100% {
+      opacity: 0;
+      transform: translateX(10px);
+    }
+  }
+
+  @keyframes workflow-pulse-y {
+    0% {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+
+    30%,
+    70% {
+      opacity: 1;
+    }
+
+    100% {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+  }
+
+  /* The module icons circling BoSS on the Modules page. Each icon turns the other way so it stays upright. */
+  @keyframes orbit-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes orbit-spin-reverse {
+    to {
+      transform: rotate(-360deg);
+    }
+  }
+
+  /* A dot travelling along a connector, left to right. */
+  @keyframes flow-dot {
+    0% {
+      left: 0;
+      opacity: 0;
+    }
+    15%,
+    85% {
+      opacity: 1;
+    }
+    100% {
+      left: calc(100% - 0.375rem);
+      opacity: 0;
+    }
+  }
+
+  @keyframes shine {
+    0%,
+    55% {
+      transform: translateX(0) skewX(-12deg);
+    }
+    100% {
+      transform: translateX(520%) skewX(-12deg);
+    }
+  }
+
+  /* A phone that turns a little one way and the other, rising and settling as it goes. */
+  @keyframes phone-sway {
+    0%,
+    100% {
+      transform: perspective(1200px) rotateY(-14deg) rotateZ(-2deg) translateY(0);
+    }
+    50% {
+      transform: perspective(1200px) rotateY(14deg) rotateZ(2deg) translateY(-12px);
+    }
+  }
+
+  @keyframes reveal {
+    from {
+      opacity: 0;
+      transform: translateY(0.6em);
+      filter: blur(6px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0);
+    }
+  }
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-0.75rem);
+    }
+  }
+}
+
+@theme inline {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}
+
+/* Typewriter effect for <TypewriterText>: reveal each character in turn, with a caret that
+   is visible only while its character is being "typed". */
+.type-char {
+  position: relative;
+  opacity: 0;
+  animation: type-in 10ms linear both;
+}
+
+.type-char::after {
+  content: "";
+  position: absolute;
+  top: 0.12em;
+  right: -0.06em;
+  bottom: 0.12em;
+  width: 0.06em;
+  background: var(--color-brand-blue);
+  opacity: 0;
+  animation: caret-pass 45ms steps(1, end);
+  animation-delay: inherit;
+}
+
+@keyframes type-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes caret-pass {
+  from,
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .type-char {
+    opacity: 1;
+    animation: none;
+  }
+
+  .type-char::after {
+    display: none;
+  }
+}
+
+/* Hides the scrollbar of a horizontally scrollable row while keeping it scrollable. */
+@utility scrollbar-none {
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Fades and lifts an element in as it scrolls into view. Pure CSS: browsers without scroll-driven
+   animations (or with reduced motion) simply show the element. */
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(1.5rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/*
+ * Parts of a product mock-up that come to life once the mock-up is on screen. The mock-up's frame
+ * carries data-visible="true" after it first scrolls into view.
+ */
+@utility mock-rise {
+  opacity: 0;
+  translate: 0 0.5rem;
+  transition:
+    opacity 0.5s ease-out,
+    translate 0.5s ease-out;
+
+  :where([data-visible="true"]) & {
+    opacity: 1;
+    translate: 0 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    opacity: 1;
+    translate: 0 0;
+    transition: none;
+  }
+}
+
+/* A chart line that draws itself. Needs pathLength="1" on the shape. */
+@utility mock-draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 1.4s ease-out;
+
+  :where([data-visible="true"]) & {
+    stroke-dashoffset: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    stroke-dashoffset: 0;
+    transition: none;
+  }
+}
+
+/* A bar that grows from its left edge, or from its bottom edge. */
+@utility mock-grow-x {
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.9s ease-out;
+
+  :where([data-visible="true"]) & {
+    transform: scaleX(1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transform: none;
+    transition: none;
+  }
+}
+
+@utility mock-grow-y {
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.9s ease-out;
+
+  :where([data-visible="true"]) & {
+    transform: scaleY(1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transform: none;
+    transition: none;
+  }
+}
+
+@utility reveal-on-scroll {
+  @supports (animation-timeline: view()) {
+    animation: reveal-up linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 35%;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+/* Scale or rotate an SVG shape about its own centre rather than the SVG's origin. */
+@utility svg-origin-center {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+/* Fade the left and right edges away, so a wide grid seems to carry on past the screen. */
+@utility fade-x {
+  mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+}
+
+/*
+ * Rows for the capability wall: six rows that together fit the window below the header, but never
+ * so short that labels are cramped or so tall that tiles look stretched. The four large tiles sit
+ * over the middle four rows.
+ */
+:root {
+  --capability-row: clamp(5.5rem, calc((100svh - 6rem) / 6), 9rem);
+}
+
+@utility capability-row {
+  height: var(--capability-row);
+}
+
+@utility capability-overlay {
+  top: var(--capability-row);
+  height: calc(var(--capability-row) * 4);
+}
+
+/* Keeps a row to the two sides of the large tiles, which take the middle 40% of the wall. */
+@utility capability-side-clip {
+  clip-path: polygon(0 0, 30% 0, 30% 100%, 70% 100%, 70% 0, 100% 0, 100% 100%, 0 100%);
+}
+
+/* Pause a row while the pointer is on it, so a tile can be chosen. */
+.capability-marquee:hover .capability-track {
+  animation-play-state: paused;
+}
+
+/*
+ * Dark theme. The colour scales flip their light and dark ends (50 to 300 trade places with
+ * 950 to 700) so every existing tint, border and text colour still reads correctly, while the
+ * mid tones (400 to 600), used for icons and solid fills, stay as they are.
+ */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --color-ink: #e8eefc;
+  --color-canvas: #0a0f1f;
+  --color-surface: #121b32;
+  --color-brand-navy: #1d3f86;
+  --color-brand-blue: #2b7bff;
+  --color-brand-tint: #13213f;
+  --color-slate-50: oklch(12.9% 0.042 264.695);
+  --color-slate-100: oklch(20.8% 0.042 265.755);
+  --color-slate-200: oklch(27.9% 0.041 260.031);
+  --color-slate-300: oklch(37.2% 0.044 257.287);
+  --color-slate-700: oklch(86.9% 0.022 252.894);
+  --color-slate-800: oklch(92.9% 0.013 255.508);
+  --color-slate-900: oklch(96.8% 0.007 247.896);
+  --color-slate-950: oklch(98.4% 0.003 247.858);
+  --color-red-50: oklch(25.8% 0.092 26.042);
+  --color-red-100: oklch(39.6% 0.141 25.723);
+  --color-red-200: oklch(44.4% 0.177 26.899);
+  --color-red-300: oklch(50.5% 0.213 27.518);
+  --color-red-700: oklch(80.8% 0.114 19.571);
+  --color-red-800: oklch(88.5% 0.062 18.334);
+  --color-red-900: oklch(93.6% 0.032 17.717);
+  --color-red-950: oklch(97.1% 0.013 17.38);
+  --color-orange-50: oklch(26.6% 0.079 36.259);
+  --color-orange-100: oklch(40.8% 0.123 38.172);
+  --color-orange-200: oklch(47% 0.157 37.304);
+  --color-orange-300: oklch(55.3% 0.195 38.402);
+  --color-orange-700: oklch(83.7% 0.128 66.29);
+  --color-orange-800: oklch(90.1% 0.076 70.697);
+  --color-orange-900: oklch(95.4% 0.038 75.164);
+  --color-orange-950: oklch(98% 0.016 73.684);
+  --color-amber-50: oklch(27.9% 0.077 45.635);
+  --color-amber-100: oklch(41.4% 0.112 45.904);
+  --color-amber-200: oklch(47.3% 0.137 46.201);
+  --color-amber-300: oklch(55.5% 0.163 48.998);
+  --color-amber-700: oklch(87.9% 0.169 91.605);
+  --color-amber-800: oklch(92.4% 0.12 95.746);
+  --color-amber-900: oklch(96.2% 0.059 95.617);
+  --color-amber-950: oklch(98.7% 0.022 95.277);
+  --color-green-50: oklch(26.6% 0.065 152.934);
+  --color-green-100: oklch(39.3% 0.095 152.535);
+  --color-green-200: oklch(44.8% 0.119 151.328);
+  --color-green-300: oklch(52.7% 0.154 150.069);
+  --color-green-700: oklch(87.1% 0.15 154.449);
+  --color-green-800: oklch(92.5% 0.084 155.995);
+  --color-green-900: oklch(96.2% 0.044 156.743);
+  --color-green-950: oklch(98.2% 0.018 155.826);
+  --color-emerald-50: oklch(26.2% 0.051 172.552);
+  --color-emerald-100: oklch(37.8% 0.077 168.94);
+  --color-emerald-200: oklch(43.2% 0.095 166.913);
+  --color-emerald-300: oklch(50.8% 0.118 165.612);
+  --color-emerald-700: oklch(84.5% 0.143 164.978);
+  --color-emerald-800: oklch(90.5% 0.093 164.15);
+  --color-emerald-900: oklch(95% 0.052 163.051);
+  --color-emerald-950: oklch(97.9% 0.021 166.113);
+  --color-teal-50: oklch(27.7% 0.046 192.524);
+  --color-teal-100: oklch(38.6% 0.063 188.416);
+  --color-teal-200: oklch(43.7% 0.078 188.216);
+  --color-teal-300: oklch(51.1% 0.096 186.391);
+  --color-teal-700: oklch(85.5% 0.138 181.071);
+  --color-teal-800: oklch(91% 0.096 180.426);
+  --color-teal-900: oklch(95.3% 0.051 180.801);
+  --color-teal-950: oklch(98.4% 0.014 180.72);
+  --color-sky-50: oklch(29.3% 0.066 243.157);
+  --color-sky-100: oklch(39.1% 0.09 240.876);
+  --color-sky-200: oklch(44.3% 0.11 240.79);
+  --color-sky-300: oklch(50% 0.134 242.749);
+  --color-sky-700: oklch(82.8% 0.111 230.318);
+  --color-sky-800: oklch(90.1% 0.058 230.902);
+  --color-sky-900: oklch(95.1% 0.026 236.824);
+  --color-sky-950: oklch(97.7% 0.013 236.62);
+  --color-blue-50: oklch(28.2% 0.091 267.935);
+  --color-blue-100: oklch(37.9% 0.146 265.522);
+  --color-blue-200: oklch(42.4% 0.199 265.638);
+  --color-blue-300: oklch(48.8% 0.243 264.376);
+  --color-blue-700: oklch(80.9% 0.105 251.813);
+  --color-blue-800: oklch(88.2% 0.059 254.128);
+  --color-blue-900: oklch(93.2% 0.032 255.585);
+  --color-blue-950: oklch(97% 0.014 254.604);
+  --color-indigo-50: oklch(25.7% 0.09 281.288);
+  --color-indigo-100: oklch(35.9% 0.144 278.697);
+  --color-indigo-200: oklch(39.8% 0.195 277.366);
+  --color-indigo-300: oklch(45.7% 0.24 277.023);
+  --color-indigo-700: oklch(78.5% 0.115 274.713);
+  --color-indigo-800: oklch(87% 0.065 274.039);
+  --color-indigo-900: oklch(93% 0.034 272.788);
+  --color-indigo-950: oklch(96.2% 0.018 272.314);
+  --color-violet-50: oklch(28.3% 0.141 291.089);
+  --color-violet-100: oklch(38% 0.189 293.745);
+  --color-violet-200: oklch(43.2% 0.232 292.759);
+  --color-violet-300: oklch(49.1% 0.27 292.581);
+  --color-violet-700: oklch(81.1% 0.111 293.571);
+  --color-violet-800: oklch(89.4% 0.057 293.283);
+  --color-violet-900: oklch(94.3% 0.029 294.588);
+  --color-violet-950: oklch(96.9% 0.016 293.756);
+  --color-pink-50: oklch(28.4% 0.109 3.907);
+  --color-pink-100: oklch(40.8% 0.153 2.432);
+  --color-pink-200: oklch(45.9% 0.187 3.815);
+  --color-pink-300: oklch(52.5% 0.223 3.958);
+  --color-pink-700: oklch(82.3% 0.12 346.018);
+  --color-pink-800: oklch(89.9% 0.061 343.231);
+  --color-pink-900: oklch(94.8% 0.028 342.258);
+  --color-pink-950: oklch(97.1% 0.014 343.198);
+}
+
+/* While a dialog is open, the page behind it stays put. */
+html:has(dialog[open]) {
+  overflow: hidden;
+}
+
+/* The colours of the BoSS app shown in the phone on the mobile app page. They follow the app's own
+   light and dark choice, not the website's theme. "System" follows the visitor's device. */
+.app-light,
+.app-system {
+  --app-bg: #f8f9fd;
+  --app-card: #ffffff;
+  --app-soft: #eef1f9;
+  --app-ink: #0f1b3d;
+  --app-muted: #66708a;
+  --app-line: #e3e7f1;
+  --app-blue: #0a66ff;
+  --app-blue-soft: #e6efff;
+  --app-green: #16a34a;
+  --app-green-soft: #e3f6ea;
+  --app-amber: #d97706;
+  --app-amber-soft: #fdf1d9;
+  --app-violet: #7c3aed;
+  --app-violet-soft: #efe8fd;
+  --app-red: #dc2626;
+  --app-red-soft: #fde6e6;
+  --app-teal: #0d9488;
+  --app-teal-soft: #dff5f2;
+}
+
+.app-dark {
+  --app-bg: #0b1226;
+  --app-card: #141c35;
+  --app-soft: #1b2442;
+  --app-ink: #eef1fb;
+  --app-muted: #9aa5c0;
+  --app-line: #27304f;
+  --app-blue: #4d8dff;
+  --app-blue-soft: #16264d;
+  --app-green: #3ecf7a;
+  --app-green-soft: #12301f;
+  --app-amber: #f2a93b;
+  --app-amber-soft: #36290f;
+  --app-violet: #a78bfa;
+  --app-violet-soft: #251d47;
+  --app-red: #f87171;
+  --app-red-soft: #3a1717;
+  --app-teal: #2dd4bf;
+  --app-teal-soft: #0f2f2c;
+}
+
+@media (prefers-color-scheme: dark) {
+  .app-system {
+    --app-bg: #0b1226;
+    --app-card: #141c35;
+    --app-soft: #1b2442;
+    --app-ink: #eef1fb;
+    --app-muted: #9aa5c0;
+    --app-line: #27304f;
+    --app-blue: #4d8dff;
+    --app-blue-soft: #16264d;
+    --app-green: #3ecf7a;
+    --app-green-soft: #12301f;
+    --app-amber: #f2a93b;
+    --app-amber-soft: #36290f;
+    --app-violet: #a78bfa;
+    --app-violet-soft: #251d47;
+    --app-red: #f87171;
+    --app-red-soft: #3a1717;
+    --app-teal: #2dd4bf;
+    --app-teal-soft: #0f2f2c;
+  }
+}
+
+/* Sections that take the whole screen hide the floating assistant, because the assistant is
+   already part of the picture there. */
+.assistant-mascot {
+  transition: opacity 300ms ease;
+}
+
+html[data-immersive] .assistant-mascot {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .assistant-mascot {
+    transition: none;
+  }
+}

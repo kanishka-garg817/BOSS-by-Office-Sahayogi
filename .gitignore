@@ -1,0 +1,37 @@
+# dependencies
+node_modules/
+.pnpm-store/
+
+# build output
+.next/
+out/
+dist/
+build/
+.turbo/
+*.tsbuildinfo
+next-env.d.ts
+
+# environment (only the template is tracked)
+.env
+.env.*
+!.env.example
+
+# logs and temp
+*.log
+npm-debug.log*
+pnpm-debug.log*
+.cache/
+tmp/
+
+# machine / editor specific
+.DS_Store
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+*.swp
+
+# tooling
+coverage/
+.vercel/
+.claude/settings.local.json
