@@ -33,6 +33,20 @@
   --color-brand-blue: #0066ff;
   --color-brand-light: #9cc3ff;
   --color-brand-tint: #eef4ff;
+  /* Light surfaces that stay light in both themes (the footer, the Why BoSS cards), so none of these are redefined for dark. */
+  --color-footer: #f4f8ff;
+  --color-light-ink: #0b1b3a;
+  --color-pastel-blue: #eaf2ff;
+  --color-pastel-amber: #fff5e1;
+  --color-pastel-green: #e7f7ee;
+  --color-pastel-violet: #f0ecff;
+  --color-pastel-rose: #ffe9ee;
+
+  /* Global Eyebrow Design Tokens */
+  --eyebrow-font-size: 0.75rem;
+  --eyebrow-font-weight: 600;
+  --eyebrow-letter-spacing: 0.08em;
+  --eyebrow-spacing-bottom: 1rem;
 
   --animate-float: float 3s ease-in-out infinite;
   --animate-orbit-sweep: orbit-sweep 10s linear infinite;
@@ -670,7 +684,14 @@ html:has(dialog[open]) {
 /* Sections that take the whole screen hide the floating assistant, because the assistant is
    already part of the picture there. */
 .assistant-mascot {
-  transition: opacity 300ms ease;
+  transition:
+    opacity 300ms ease,
+    transform 300ms ease;
+}
+
+/* The footer's bottom row is where the assistant would sit, so it steps up while that row is on screen. */
+html[data-assistant-lifted] .assistant-mascot {
+  transform: translateY(-5.5rem);
 }
 
 html[data-immersive] .assistant-mascot {

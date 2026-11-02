@@ -2,7 +2,7 @@ export type NavItem = {
   label: string;
   href: `/${string}`;
   /** Items with a menu open a dropdown on click instead of navigating straight away. */
-  menu?: "modules";
+  menu?: "modules" | "solutions";
   /** Plain links show no dropdown arrow. */
   isPlain?: boolean;
 };
@@ -10,7 +10,7 @@ export type NavItem = {
 export const primaryNav: readonly NavItem[] = [
   { label: "Modules", href: "/modules", menu: "modules" },
   { label: "Pricing", href: "/pricing", isPlain: true },
-  { label: "Solutions", href: "/#solutions" },
+  { label: "Solutions", href: "/#solutions", menu: "solutions" },
   { label: "Resources", href: "/resources" },
   { label: "Company", href: "/company" },
 ];
@@ -31,5 +31,15 @@ export const exploreModulesAction = {
 
 export const seeHowItWorksAction = {
   label: "See how it works",
+  href: "/#solutions",
+} as const satisfies NavItem;
+
+export const compareAction = {
+  label: "See how BoSS compares",
+  href: "/compare",
+} as const satisfies NavItem;
+
+export const seeHowBossWorksAction = {
+  label: "See how BoSS works",
   href: "/#solutions",
 } as const satisfies NavItem;

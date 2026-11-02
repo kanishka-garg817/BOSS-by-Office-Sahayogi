@@ -1,5 +1,5 @@
 import { ButtonLink } from "@/components/ui/button-link";
-import { Eyebrow } from "@/components/ui/eyebrow";
+import { Eyebrow } from "@boss/ui";
 import { SectionBackdrop } from "@/components/ui/section-backdrop";
 import { bookDemoAction } from "@/config/navigation";
 

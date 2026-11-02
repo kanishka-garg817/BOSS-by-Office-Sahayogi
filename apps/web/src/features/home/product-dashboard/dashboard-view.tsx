@@ -4,10 +4,10 @@ import {
   ChevronDown,
   ChevronLeft,
   ChevronRight,
-  CookingPot,
   Hourglass,
   Landmark,
   LayoutDashboard,
+  MoreHorizontal,
   Package,
   Percent,
   Plus,
@@ -30,9 +30,10 @@ import {
   expenseSeries,
   greeting,
   kpis,
-  moduleStatus,
   moduleSummaries,
+  moduleStatus,
   months,
+  moreModuleSlugs,
   revenueSeries,
   sidebarModuleSlugs,
   type Kpi,
@@ -71,9 +72,58 @@ export const moduleTile = (slug: string) => {
   return { bossModule, tone: toneClass[moduleTone[bossModule.tone]] };
 };
 
-const Sidebar = () => (
-  <div className="flex w-20 shrink-0 flex-col items-center bg-app-card py-3">
-    <Image src={markImage} alt="" className="mb-3 h-8 w-auto" sizes="32px" />
+type SidebarProps = {
+  isMoreOpen: boolean;
+  onMoreToggle: () => void;
+};
+
+const SidebarItem = ({ slug }: { slug: string }) => {
+  const tile = moduleTile(slug);
+  if (!tile) return null;
+  return (
+    <span className="flex w-full flex-col items-center gap-1 px-1 py-1.5 text-center text-[11px] leading-tight text-app-muted">
+      <span
+        className={`flex size-8 items-center justify-center rounded-lg ${tile.tone.soft} ${tile.tone.text}`}
+      >
+        <tile.bossModule.icon aria-hidden="true" className="size-4" />
+      </span>
+      {tile.bossModule.name}
+    </span>
+  );
+};
+
+/** The small window beside the sidebar that lists the modules the bar has no room for. */
+const MoreModulesWindow = () => (
+  <div
+    id="more-modules"
+    data-tour="more-window"
+    role="group"
+    aria-label="More modules"
+    className="absolute bottom-3 left-[5.25rem] z-20 w-64 rounded-2xl border border-app-line bg-app-card p-3 shadow-xl"
+  >
+    <p className="px-1 pb-2 text-xs font-bold text-app-ink">More modules</p>
+    <ul className="space-y-0.5">
+      {moreModuleSlugs.map((slug) => {
+        const tile = moduleTile(slug);
+        if (!tile) return null;
+        return (
+          <li key={slug} className="flex items-center gap-2.5 rounded-lg px-1.5 py-1.5">
+            <span
+              className={`flex size-7 shrink-0 items-center justify-center rounded-lg ${tile.tone.soft} ${tile.tone.text}`}
+            >
+              <tile.bossModule.icon aria-hidden="true" className="size-3.5" />
+            </span>
+            <span className="text-xs font-semibold text-app-ink">{tile.bossModule.name}</span>
+          </li>
+        );
+      })}
+    </ul>
+  </div>
+);
+
+export const Sidebar = ({ isMoreOpen, onMoreToggle }: SidebarProps) => (
+  <div className="relative flex w-20 shrink-0 flex-col items-center bg-app-card py-3">
+    <Image src={markImage} alt="" className="mb-3 h-8 w-auto shrink-0" sizes="32px" />
     <nav
       aria-label="Modules"
       data-tour="modules"
@@ -89,24 +139,27 @@ const Sidebar = () => (
         </span>
         Dashboard
       </span>
-      {sidebarModuleSlugs.map((slug) => {
-        const tile = moduleTile(slug);
-        if (!tile) return null;
-        return (
-          <span
-            key={slug}
-            className="flex w-full flex-col items-center gap-1 px-1 py-1.5 text-center text-[11px] leading-tight text-app-muted"
-          >
-            <span
-              className={`flex size-8 items-center justify-center rounded-lg ${tile.tone.soft} ${tile.tone.text}`}
-            >
-              <tile.bossModule.icon aria-hidden="true" className="size-4" />
-            </span>
-            {tile.bossModule.name}
-          </span>
-        );
-      })}
+      {sidebarModuleSlugs.map((slug) => (
+        <SidebarItem key={slug} slug={slug} />
+      ))}
+      <button
+        type="button"
+        data-tour="more"
+        aria-label="View more modules"
+        aria-expanded={isMoreOpen}
+        aria-controls="more-modules"
+        onClick={onMoreToggle}
+        className="mt-0.5 flex w-full flex-col items-center gap-1 px-1 py-1.5 text-[11px] leading-tight text-app-muted focus-visible:outline-2 focus-visible:outline-app-blue"
+      >
+        <span
+          className={`flex size-8 items-center justify-center rounded-lg ${isMoreOpen ? "bg-app-blue-soft text-app-blue" : "bg-app-soft text-app-muted"}`}
+        >
+          <MoreHorizontal aria-hidden="true" className="size-4" />
+        </span>
+        View more
+      </button>
     </nav>
+    {isMoreOpen ? <MoreModulesWindow /> : null}
   </div>
 );
 
@@ -129,9 +182,6 @@ const TopBar = () => (
     </span>
     <Plus aria-hidden="true" className="ml-3 size-4 text-app-ink" />
     <Bell aria-hidden="true" className="size-4 text-app-ink" />
-    <span className="flex size-8 items-center justify-center rounded-lg bg-brand-navy text-white">
-      <CookingPot aria-hidden="true" className="size-4" />
-    </span>
     <span className="flex size-8 items-center justify-center rounded-full bg-app-blue-soft text-xs font-bold text-app-blue">
       {dashboardUser.initials}
     </span>
@@ -211,7 +261,7 @@ const pointsFor = (series: readonly number[]): string =>
 const RevenueChart = () => (
   <section data-tour="revenue" aria-label="Revenue versus expense" className={`p-4 ${card}`}>
     <div className="flex items-start justify-between">
-      <h3 className="text-sm font-bold text-app-ink">Revenue vs Expense</h3>
+      <p className="text-sm font-bold text-app-ink">Revenue vs Expense</p>
       <span className="flex gap-3 text-[11px] text-app-muted">
         <span className="flex items-center gap-1.5">
           <span aria-hidden="true" className="size-1.5 rounded-full bg-app-blue" />
@@ -295,7 +345,7 @@ const categoryColors = [
 
 const CategoryChart = () => (
   <section data-tour="categories" aria-label="Items by category" className={`p-4 ${card}`}>
-    <h3 className="text-sm font-bold text-app-ink">Items by category</h3>
+    <p className="text-sm font-bold text-app-ink">Items by category</p>
     <ul className="mt-3 space-y-2.5">
       {categories.map((category, index) => (
         <li key={category.id} className="space-y-1">
@@ -317,7 +367,7 @@ const CategoryChart = () => (
 
 const ModulesGlance = () => (
   <section data-tour="glance" aria-label="Modules at a glance" className={`p-4 ${card}`}>
-    <h3 className="text-sm font-bold text-app-ink">Modules at a Glance</h3>
+    <p className="text-sm font-bold text-app-ink">Modules at a Glance</p>
     <p className="text-[11px] text-app-muted">Every module you have access to</p>
     <ul className="mt-3 grid grid-cols-3 gap-2.5">
       {sidebarModuleSlugs.slice(0, 6).map((slug) => {
@@ -358,14 +408,14 @@ const ModulesGlance = () => (
 );
 
 type DashboardViewProps = {
-  /** Replaces the plain module bar, for pages that make it interactive. */
-  sidebar?: ReactNode;
+  /** The bar down the left side. */
+  sidebar: ReactNode;
 };
 
 /** The dashboard's own picture: sidebar, top bar, key numbers, calendar, charts and modules. */
 export const DashboardView = ({ sidebar }: DashboardViewProps) => (
   <div className="flex min-w-0 flex-1">
-    {sidebar ?? <Sidebar />}
+    {sidebar}
     <div className="flex min-w-0 flex-1 flex-col bg-app-bg">
       <TopBar />
       <div className="space-y-3 px-4 pb-4">

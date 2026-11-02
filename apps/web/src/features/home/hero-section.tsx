@@ -1,5 +1,4 @@
 import { ButtonLink } from "@/components/ui/button-link";
-import { Eyebrow } from "@/components/ui/eyebrow";
 import { SectionBackdrop } from "@/components/ui/section-backdrop";
 import { exploreModulesAction, seeHowItWorksAction } from "@/config/navigation";
 
@@ -26,21 +25,17 @@ export const HeroSection = () => (
     />
 
     <div className="mx-auto flex w-full max-w-7xl flex-col items-center px-4 pt-14 pb-14 text-center sm:px-6 sm:pt-16 sm:pb-20 lg:px-8 lg:pt-20">
-      <Eyebrow className="motion-safe:animate-reveal">
-        BoSS · Business Operations & System Suite
-      </Eyebrow>
-
       <h1
         id="hero-heading"
         aria-label={HEADING_TEXT}
-        className="mt-6 max-w-6xl text-3xl leading-tight font-extrabold tracking-tight text-balance text-ink sm:text-5xl lg:text-6xl"
+        className="max-w-6xl text-3xl leading-tight font-extrabold tracking-tight text-balance text-ink sm:text-5xl lg:text-6xl"
       >
         <TypewriterText segments={HEADING_SEGMENTS} />
       </h1>
 
       <p
         className="mt-5 max-w-2xl text-base text-pretty text-ink/75 motion-safe:animate-reveal sm:text-lg"
-        style={{ animationDelay: "500ms" }}
+        style={{ animationDelay: "300ms" }}
       >
         BoSS connects your accounting, sales, stock and people in one easy place. Start with one
         module and add more anytime.
@@ -48,7 +43,7 @@ export const HeroSection = () => (
 
       <div
         className="mt-10 flex w-full flex-col gap-3 motion-safe:animate-reveal sm:w-auto sm:flex-row sm:gap-4"
-        style={{ animationDelay: "700ms" }}
+        style={{ animationDelay: "400ms" }}
       >
         <ButtonLink action={exploreModulesAction} size="lg" withArrow />
         <ButtonLink action={seeHowItWorksAction} variant="secondary" size="lg" />
@@ -56,7 +51,7 @@ export const HeroSection = () => (
 
       <div
         className="mt-10 w-full motion-safe:animate-reveal sm:mt-12"
-        style={{ animationDelay: "900ms" }}
+        style={{ animationDelay: "500ms" }}
       >
         <ProductDashboard />
       </div>

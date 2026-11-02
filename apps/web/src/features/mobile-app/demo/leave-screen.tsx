@@ -48,7 +48,7 @@ export const LeaveScreen = ({
       <div className="space-y-4 overflow-y-auto px-4 pt-4 pb-6">
         <div className="space-y-3 rounded-3xl bg-app-blue p-4 text-white">
           <div className="flex items-center justify-between">
-            <h3 className="text-base font-bold">My Leave Balance</h3>
+            <p className="text-base font-bold">My Leave Balance</p>
             <span className="rounded-full bg-white/20 px-3 py-0.5 text-xs font-bold">2026</span>
           </div>
           <div className="grid grid-cols-3 gap-2 text-center">
@@ -82,7 +82,7 @@ export const LeaveScreen = ({
           </div>
         </div>
 
-        <h3 className="text-base font-bold text-app-ink">Leave Status</h3>
+        <p className="text-base font-bold text-app-ink">Leave Status</p>
         <div className="flex gap-2 overflow-x-auto" role="group" aria-label="Filter leave requests">
           {filters.map((item) => (
             <button

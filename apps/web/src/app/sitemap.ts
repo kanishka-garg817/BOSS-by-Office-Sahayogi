@@ -1,15 +1,12 @@
 import type { MetadataRoute } from "next";
 
+import { liveRoutes } from "@/config/launch";
 import { solutions } from "@/config/solutions";
 import { absoluteUrl } from "@/lib/site";
 
-// Public, indexable routes. Add a route here when its page is implemented.
+// The pages that are built and open. A page is added by adding its route to `config/launch.ts`.
 const sitemap = (): MetadataRoute.Sitemap => [
-  { url: absoluteUrl("/") },
-  { url: absoluteUrl("/modules") },
-  { url: absoluteUrl("/modules/finance-accounting") },
-  { url: absoluteUrl("/modules/finance-accounting/features") },
-  { url: absoluteUrl("/mobile-app") },
+  ...liveRoutes.map((route) => ({ url: absoluteUrl(route) })),
   ...solutions.map((solution) => ({ url: absoluteUrl(`/solutions/${solution.slug}`) })),
 ];
 

@@ -3,7 +3,7 @@ import { socialProfiles, type SocialProfile } from "@/config/social";
 import { socialMarks } from "./social-marks";
 
 const tileClass =
-  "flex size-10 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white transition";
+  "flex size-11 items-center justify-center rounded-full bg-pastel-blue text-light-ink transition";
 
 const Mark = ({ id }: Pick<SocialProfile, "id">) => (
   <svg viewBox="0 0 24 24" aria-hidden="true" className="size-4.5 fill-current">
@@ -22,7 +22,7 @@ export const FooterSocial = () => (
             target="_blank"
             rel="noopener noreferrer"
             aria-label={profile.label}
-            className={`${tileClass} hover:-translate-y-0.5 hover:bg-white hover:text-brand-blue focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white`}
+            className={`${tileClass} hover:-translate-y-0.5 hover:bg-brand-blue hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue`}
           >
             <Mark id={profile.id} />
           </a>

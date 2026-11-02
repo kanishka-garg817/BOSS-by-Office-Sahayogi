@@ -9,9 +9,11 @@ export type SocialProfile = {
 
 /** BoSS's social profiles, in the order the footer shows them. Fill in `href` as each one opens. */
 export const socialProfiles: readonly SocialProfile[] = [
-  { id: "linkedin", label: "LinkedIn", href: undefined },
+  {
+    id: "linkedin",
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/showcase/boss-by-office-sahayogi/home/",
+  },
   { id: "facebook", label: "Facebook", href: undefined },
   { id: "instagram", label: "Instagram", href: undefined },
-  { id: "x", label: "X (Twitter)", href: undefined },
-  { id: "youtube", label: "YouTube", href: undefined },
 ];

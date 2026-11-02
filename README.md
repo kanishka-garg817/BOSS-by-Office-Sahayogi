@@ -39,13 +39,15 @@ turbo.json         Task pipeline (build, lint, typecheck, dev)
 
 Dependencies point one way: `apps/*` → `packages/*`. See `.claude/rules/architecture.md` for the full rules.
 
-Routes today: `/` (homepage), `/modules`, `/solutions/[slug]` (one page per solution, linked from the homepage Solution cards, defined in `apps/web/src/config/solutions.ts`), plus the health endpoints below and `robots.txt` / `sitemap.xml`.
+Routes today: every page that is built is live: `/`, `/book-demo`, `/mobile-app`, `/privacy-policy`, `/terms-of-service`, `/modules` with `/modules/finance-accounting` (and `/features`), `/industries` with the Retail & Electronics and Manufacturing pages, and `/solutions/[slug]`. A page that is linked but not built yet (pricing, contact, the other module and industry pages and so on) shows a "coming soon" page (`/coming-soon/[...path]`, `noindex`, not in the sitemap). `apps/web/src/proxy.ts` sends every address that is not listed in `apps/web/src/config/launch.ts` to it; add a route to `config/launch.ts` when its page is built. Pages that are linked but have no page at all are listed in `config/coming-soon.ts`. The health endpoints, `robots.txt`, `sitemap.xml`, `manifest.webmanifest` and the generated icons and share image are always available.
+
+The Book a Demo form (`apps/web/src/features/book-demo`) validates the request on the server, limits repeated sends, and passes it to the team by email (Resend) and WhatsApp (WhatsApp Business Cloud API). Set the variables in `.env.example` to turn each channel on. Without either, the form only logs the request outside production and shows an error in production.
 
 What exists in `apps/web` today:
 
 - Root layout with `next/font` (Inter), global metadata and `metadataBase`
-- `robots.txt` and `sitemap.xml` routes (indexing enabled only when `APP_ENV=production`; sitemap is empty until pages exist)
-- `createPageMetadata` helper (canonical, Open Graph, Twitter, robots) and a `JsonLd` component
+- `robots.txt` and `sitemap.xml` routes (indexing enabled only when `APP_ENV=production`; the sitemap lists the built, indexable pages)
+- SEO foundation: `createPageMetadata` (title, description, canonical, Open Graph, Twitter, preview image, robots), site-wide keywords, `en-IN` language and theme colours, `app/icon`, `app/apple-icon`, `app/opengraph-image`, `app/manifest.ts`, and structured data in `lib/structured-data.ts` (Organization, WebSite, SoftwareApplication, WebPage, FAQPage and BreadcrumbList) rendered with the `JsonLd` component
 - Security headers in `next.config.ts`
 - `GET /api/health` (liveness) and `GET /api/health/ready` (readiness, checks PostgreSQL)
 - Validated environment access in `src/env.ts`

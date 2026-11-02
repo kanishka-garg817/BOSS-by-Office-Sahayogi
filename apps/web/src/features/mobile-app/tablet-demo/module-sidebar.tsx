@@ -8,6 +8,9 @@ import { moduleTile } from "@/features/home/product-dashboard/dashboard-view";
 
 import type { TabletMenu } from "./use-tablet-menu";
 
+/** How many modules the tablet's bar has room for. */
+const TABLET_MODULE_COUNT = 8;
+
 const focusRing =
   "focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-app-blue";
 
@@ -101,7 +104,7 @@ export const ModuleSidebar = ({ menu }: { menu: TabletMenu }) => (
           </span>
           Dashboard
         </button>
-        {sidebarModuleSlugs.map((slug) => {
+        {sidebarModuleSlugs.slice(0, TABLET_MODULE_COUNT).map((slug) => {
           const tile = moduleTile(slug);
           if (!tile) return null;
           const isActive = menu.activeSlug === slug;

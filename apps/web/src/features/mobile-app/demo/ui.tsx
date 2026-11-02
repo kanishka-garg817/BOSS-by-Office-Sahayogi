@@ -7,10 +7,10 @@ export const Card = ({ children, className = "" }: { children: ReactNode; classN
 );
 
 export const SectionTitle = ({ children }: { children: ReactNode }) => (
-  <h3 className="flex items-center gap-2 text-base font-bold text-app-ink">
+  <p className="flex items-center gap-2 text-base font-bold text-app-ink">
     <span aria-hidden="true" className="h-4 w-1 rounded-full bg-app-blue" />
     {children}
-  </h3>
+  </p>
 );
 
 export const Progress = ({

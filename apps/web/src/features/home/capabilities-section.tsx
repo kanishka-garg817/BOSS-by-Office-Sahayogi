@@ -1,6 +1,6 @@
 import { type ReactNode } from "react";
 
-import { Eyebrow } from "@/components/ui/eyebrow";
+import { Eyebrow } from "@boss/ui";
 import { ImmersiveMarker } from "@/components/ui/immersive-marker";
 import { moduleGroups, type ModuleGroupId } from "@/config/modules";
 
@@ -52,11 +52,11 @@ export const CapabilitiesSection = () => (
         id="capabilities-heading"
         className="mt-4 text-3xl leading-tight font-extrabold tracking-tight text-balance text-ink lg:text-3xl xl:text-4xl"
       >
-        Everything your business runs on, in one place
+        See What BoSS Can Handle
       </h2>
       <p className="mt-3 text-sm text-pretty text-ink/70 sm:text-base">
-        From the first enquiry to the final payslip, this is the work your teams do every day in
-        BoSS.
+        From finding customers and creating invoices to managing stock, payroll, orders and reports,
+        BoSS gives your team the tools to handle everyday business work.
       </p>
     </div>
 

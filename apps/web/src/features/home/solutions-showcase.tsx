@@ -1,7 +1,7 @@
 import { ArrowRight, Check } from "lucide-react";
 import Link from "next/link";
 
-import { Eyebrow } from "@/components/ui/eyebrow";
+import { Eyebrow } from "@boss/ui";
 import { SectionBackdrop } from "@/components/ui/section-backdrop";
 import { solutionAnimations } from "@/config/solution-animations";
 import { solutions } from "@/config/solutions";

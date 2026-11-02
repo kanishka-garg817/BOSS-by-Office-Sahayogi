@@ -4,6 +4,7 @@
 
 - `apps/web` — the Next.js (App Router) app: UI, routes, route handlers, server actions.
 - `packages/db` — all PostgreSQL access (Drizzle ORM, schema, migrations). Server-only.
+- `packages/ui` — shared design-system components and design tokens, consumed by `apps/web` (and any future app). No server-only or database code.
 - `packages/config` — shared tsconfig bases and ESLint configs. No runtime code.
 
 ## Rules

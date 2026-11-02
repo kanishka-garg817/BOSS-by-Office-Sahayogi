@@ -68,9 +68,9 @@ export const BusinessScreen = () => (
     </div>
 
     <Card className="overflow-hidden">
-      <h4 className="border-b border-app-line px-3.5 py-2.5 text-sm font-bold text-app-ink">
+      <p className="border-b border-app-line px-3.5 py-2.5 text-sm font-bold text-app-ink">
         Today&apos;s visits
-      </h4>
+      </p>
       {business.visits.map((visit) => (
         <div
           key={visit.id}
@@ -91,10 +91,10 @@ export const BusinessScreen = () => (
     </Card>
 
     <Card className="space-y-3 p-3.5">
-      <h4 className="flex items-center gap-2 text-sm font-bold text-app-ink">
+      <p className="flex items-center gap-2 text-sm font-bold text-app-ink">
         <Package aria-hidden="true" className="size-4 text-app-blue" />
         Product targets
-      </h4>
+      </p>
       {business.products.map((product) => (
         <div key={product.id} className="space-y-1.5">
           <div className="flex justify-between text-xs">
@@ -109,9 +109,9 @@ export const BusinessScreen = () => (
     </Card>
 
     <Card className="overflow-hidden">
-      <h4 className="border-b border-app-line px-3.5 py-2.5 text-sm font-bold text-app-ink">
+      <p className="border-b border-app-line px-3.5 py-2.5 text-sm font-bold text-app-ink">
         Top dealers this month
-      </h4>
+      </p>
       {business.dealers.map((dealer) => (
         <div
           key={dealer.id}
@@ -130,9 +130,9 @@ export const BusinessScreen = () => (
     </Card>
 
     <Card className="overflow-hidden">
-      <h4 className="border-b border-app-line px-3.5 py-2.5 text-sm font-bold text-app-ink">
+      <p className="border-b border-app-line px-3.5 py-2.5 text-sm font-bold text-app-ink">
         Follow-ups
-      </h4>
+      </p>
       {business.followUps.map((item) => (
         <div
           key={item.id}

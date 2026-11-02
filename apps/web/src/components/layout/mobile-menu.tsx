@@ -4,6 +4,8 @@ import { useEffect, useId, useRef, useState } from "react";
 
 import { ButtonLink } from "@/components/ui/button-link";
 import { featuredModules } from "@/config/modules";
+import { allIndustriesAction, industries } from "@/config/industries";
+import { solutionCategories } from "@/config/solution-categories";
 import { viewAllModulesAction, type NavItem } from "@/config/navigation";
 
 import { ChevronDownIcon } from "./chevron-down-icon";
@@ -21,8 +23,10 @@ const linkClass =
 export const MobileMenu = ({ items, primaryAction }: MobileMenuProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isModulesOpen, setIsModulesOpen] = useState(false);
+  const [isSolutionsOpen, setIsSolutionsOpen] = useState(false);
   const panelId = useId();
   const modulesPanelId = useId();
+  const solutionsPanelId = useId();
   const toggleRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
@@ -107,6 +111,69 @@ export const MobileMenu = ({ items, primaryAction }: MobileMenuProps) => {
                         className="mt-1 flex min-h-11 items-center justify-between rounded-lg bg-brand-tint px-4 text-sm font-semibold text-brand-blue focus-visible:outline-2 focus-visible:outline-brand-blue"
                       >
                         {viewAllModulesAction.label}
+                        <span aria-hidden="true">→</span>
+                      </a>
+                    </div>
+                  </>
+                ) : null}
+                {item.menu === "solutions" ? (
+                  <>
+                    <button
+                      type="button"
+                      aria-expanded={isSolutionsOpen}
+                      aria-controls={solutionsPanelId}
+                      className={`${linkClass} w-full`}
+                      onClick={() => {
+                        setIsSolutionsOpen((open) => !open);
+                      }}
+                    >
+                      {item.label}
+                      <ChevronDownIcon
+                        className={`size-5 shrink-0 opacity-70 transition-transform ${isSolutionsOpen ? "rotate-180" : ""}`}
+                      />
+                    </button>
+                    <div id={solutionsPanelId} hidden={!isSolutionsOpen} className="pb-2 pl-2">
+                      <ul>
+                        {solutionCategories.map((category) => (
+                          <li key={category.label}>
+                            <a
+                              href={category.href}
+                              onClick={closeMenu}
+                              className="flex min-h-11 items-center rounded-lg px-2 py-1.5 text-sm font-medium text-ink transition-colors hover:bg-brand-tint focus-visible:outline-2 focus-visible:outline-brand-blue"
+                            >
+                              {category.label}
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                      <p className="mt-2 px-2 pb-1 text-xs font-semibold tracking-wide text-ink/60 uppercase">
+                        Industries
+                      </p>
+                      <ul>
+                        {industries.map((industry) => (
+                          <li key={industry.slug}>
+                            {industry.href ? (
+                              <a
+                                href={industry.href}
+                                onClick={closeMenu}
+                                className="flex min-h-11 items-center rounded-lg px-2 py-1.5 text-sm font-medium text-ink transition-colors hover:bg-brand-tint focus-visible:outline-2 focus-visible:outline-brand-blue"
+                              >
+                                {industry.name}
+                              </a>
+                            ) : (
+                              <p className="flex min-h-11 items-center px-2 py-1.5 text-sm font-medium text-ink/60">
+                                {industry.name}
+                              </p>
+                            )}
+                          </li>
+                        ))}
+                      </ul>
+                      <a
+                        href={allIndustriesAction.href}
+                        onClick={closeMenu}
+                        className="mt-1 flex min-h-11 items-center justify-between rounded-lg bg-brand-tint px-4 text-sm font-semibold text-brand-blue focus-visible:outline-2 focus-visible:outline-brand-blue"
+                      >
+                        {allIndustriesAction.label}
                         <span aria-hidden="true">→</span>
                       </a>
                     </div>

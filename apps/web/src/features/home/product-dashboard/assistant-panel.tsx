@@ -17,7 +17,7 @@ export const AssistantPanel = ({ chat, onClose }: AssistantPanelProps) => (
   >
     <header className="flex items-center gap-2 border-b border-app-line px-4 py-3">
       <Image src={robotImage} alt="" className="w-7" sizes="28px" />
-      <h2 className="flex-1 text-base font-bold text-app-ink">Sahayogi</h2>
+      <p className="flex-1 text-base font-bold text-app-ink">Sahayogi</p>
       <Clock aria-hidden="true" className="size-4 text-app-muted" />
       <SquarePen aria-hidden="true" className="size-4 text-app-muted" />
       <button

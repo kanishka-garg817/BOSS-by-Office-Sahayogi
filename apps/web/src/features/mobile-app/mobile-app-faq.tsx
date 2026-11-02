@@ -1,7 +1,7 @@
 import { ChevronDown } from "lucide-react";
 
 import { JsonLd } from "@/components/json-ld";
-import { Eyebrow } from "@/components/ui/eyebrow";
+import { Eyebrow } from "@boss/ui";
 import { appFaqs } from "@/config/mobile-app";
 
 const faqJsonLd = {

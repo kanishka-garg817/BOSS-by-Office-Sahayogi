@@ -1,5 +1,5 @@
 import { ButtonLink } from "@/components/ui/button-link";
-import { Eyebrow } from "@/components/ui/eyebrow";
+import { Eyebrow } from "@boss/ui";
 import { EcosystemVisual } from "./ecosystem-visual";
 
 const exploreModulesAction = { label: "Explore Modules", href: "/modules#all-modules" } as const;
@@ -13,7 +13,7 @@ export const ModulesHero = () => (
   <section aria-labelledby="modules-heading" className="relative py-14 sm:py-20 lg:py-24">
     <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:gap-16 lg:px-8">
       <div>
-        <Eyebrow className="text-xs tracking-widest uppercase">BoSS Business Modules</Eyebrow>
+        <Eyebrow>BoSS Business Modules</Eyebrow>
         <h1
           id="modules-heading"
           className="mt-5 text-4xl leading-tight font-extrabold tracking-tight text-balance text-ink sm:text-5xl"

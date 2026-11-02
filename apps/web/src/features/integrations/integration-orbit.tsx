@@ -44,28 +44,65 @@ type Arc = {
   durationS: number;
 };
 
-const WIDE_BREAKPOINT = 768;
+/** Below this width the scene turns on its side, because the sideways layout cannot fit every logo apart. */
+const WIDE_BREAKPOINT = 920;
 const BOSS_GAP = 40;
 const RIDE_FADE = "0;1;1;0";
 const RIDE_FADE_TIMES = "0;0.1;0.9;1";
 const SWEEP_DASH = "240 760";
 const EDGE_FADE = 0.06;
 
-/** Outermost first. Each set holds the nine logos of one side. */
-const WIDE_ARCS: readonly Arc[] = [
-  { reach: 1, count: 4, direction: 1, durationS: 36 },
-  { reach: 0.7, count: 3, direction: -1, durationS: 30 },
-  { reach: 0.4, count: 2, direction: 1, durationS: 24 },
-];
+const PILL_PAD = { x: 12, y: 7 } as const;
+const PILL_CLEARANCE = 8;
+const MAX_ARCS = 3;
+/** How far either side of its tip a logo travels along an arc on a phone. */
+const NARROW_TRAVEL_DEGREES = 68;
+const BASE_DURATION_S = 36;
+const DURATION_STEP_S = 6;
 
-/** Phones are narrow, so two arcs carry the same logos. */
-const NARROW_ARCS: readonly Arc[] = [
-  { reach: 1, count: 5, direction: 1, durationS: 36 },
-  { reach: 0.62, count: 4, direction: -1, durationS: 28 },
-];
+/** The logos shown on each side of BoSS; the right side has one fewer when the total is odd. */
+const LOGOS_PER_SIDE = Math.ceil(integrations.length / 2);
+
+/**
+ * The arcs of one side, outermost first. No two logos may touch, so:
+ * - arcs are spaced by more than the diagonal of a logo's pill, and two logos on different arcs
+ *   are never closer than that spacing, however the timing falls;
+ * - on one arc, neighbouring logos keep at least that distance apart, which limits how many
+ *   logos an arc can carry. Logos that do not fit are left out rather than squeezed in.
+ */
+const buildArcs = (radius: number, logo: Size, travelDegrees: number): readonly Arc[] => {
+  const pillWidth = logo.w + PILL_PAD.x * 2;
+  const pillHeight = logo.h + PILL_PAD.y * 2;
+  const apart = Math.hypot(pillWidth, pillHeight) + PILL_CLEARANCE;
+  const innermost = pillWidth / 2 + PILL_CLEARANCE;
+  const arcCount = clamp(Math.floor((radius - innermost) / apart) + 1, 1, MAX_ARCS);
+  const reaches = Array.from({ length: arcCount }, (_, index) => 1 - (index * apart) / radius);
+  const capacities = reaches.map((reach) => {
+    const arcRadius = radius * reach;
+    const minAngle = toDegrees(2 * Math.asin(Math.min(1, apart / (2 * arcRadius))));
+    return Math.floor((2 * travelDegrees) / minAngle);
+  });
+  const counts = reaches.map(() => 0);
+  for (let placed = 0, index = 0, misses = 0; placed < LOGOS_PER_SIDE && misses < arcCount;) {
+    const arc = index % arcCount;
+    if ((counts[arc] ?? 0) < (capacities[arc] ?? 0)) {
+      counts[arc] = (counts[arc] ?? 0) + 1;
+      placed += 1;
+      misses = 0;
+    } else {
+      misses += 1;
+    }
+    index += 1;
+  }
+  return reaches.map((reach, index) => ({
+    reach,
+    count: counts[index] ?? 0,
+    direction: index % 2 === 0 ? 1 : -1,
+    durationS: BASE_DURATION_S - index * DURATION_STEP_S,
+  }));
+};
 
 const SIDES: readonly Side[] = [0, 1];
-const LOGOS_PER_SIDE = WIDE_ARCS.reduce((total, arc) => total + arc.count, 0);
 
 const toRadians = (degrees: number): number => (degrees * Math.PI) / 180;
 const toDegrees = (radians: number): number => (radians * 180) / Math.PI;
@@ -87,6 +124,7 @@ const buildScene = (width: number, viewportHeight: number): Scene => {
     const logo = { w: 100, h: 38 };
     const radius = Math.min(height * 0.62, boss.x - boss.r - BOSS_GAP - logo.w / 2);
     const reachable = (height / 2 - logo.h - 6) / radius;
+    const travelDegrees = Math.min(62, toDegrees(Math.asin(Math.min(1, reachable))));
     return {
       isWide: true,
       width,
@@ -96,8 +134,8 @@ const buildScene = (width: number, viewportHeight: number): Scene => {
       boss,
       logo,
       radius,
-      arcs: WIDE_ARCS,
-      travelDegrees: Math.min(62, toDegrees(Math.asin(Math.min(1, reachable)))),
+      arcs: buildArcs(radius, logo, travelDegrees),
+      travelDegrees,
     };
   }
   const radius = Math.min(width / 2 - 8, 190);
@@ -113,8 +151,8 @@ const buildScene = (width: number, viewportHeight: number): Scene => {
     boss: { x: width / 2, y: bossY, r: bossRadius },
     logo: { w: 58, h: 24 },
     radius,
-    arcs: NARROW_ARCS,
-    travelDegrees: 54,
+    arcs: buildArcs(radius, { w: 58, h: 24 }, NARROW_TRAVEL_DEGREES),
+    travelDegrees: NARROW_TRAVEL_DEGREES,
   };
 };
 
@@ -163,8 +201,6 @@ const ridePath = (scene: Scene, side: Side, arc: Arc): string =>
   );
 
 type LogoProps = { integration: Integration; room: Size };
-
-const PILL_PAD = { x: 12, y: 7 } as const;
 
 /** A light pill behind every logo keeps dark marks readable in both themes. */
 const LogoPill = ({ width, height }: { width: number; height: number }) => (

@@ -82,7 +82,7 @@ const StatusBar = () => (
 const TabHeader = ({ tab }: { tab: Tab }) =>
   tab === "more" ? (
     <header className="flex shrink-0 items-center justify-between px-4 py-4">
-      <h2 className="text-xl font-bold text-app-ink">More</h2>
+      <p className="text-xl font-bold text-app-ink">More</p>
       <span className="flex gap-4 text-app-ink">
         <Search aria-hidden="true" className="size-5" />
         <Bell aria-hidden="true" className="size-5" />
@@ -96,7 +96,7 @@ const TabHeader = ({ tab }: { tab: Tab }) =>
       >
         <Image src={markImage} alt="" className="h-6 w-auto" sizes="24px" />
       </span>
-      <h2 className="flex-1 text-lg font-bold text-app-ink">{demoCompany}</h2>
+      <p className="flex-1 text-lg font-bold text-app-ink">{demoCompany}</p>
       <Search aria-hidden="true" className="size-5 text-app-ink" />
       <Bell aria-hidden="true" className="size-5 text-app-ink" />
     </header>

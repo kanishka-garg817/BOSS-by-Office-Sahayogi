@@ -1,4 +1,4 @@
-import { CalendarCheck, type LucideIcon, Wallet } from "lucide-react";
+import { CalendarCheck, LifeBuoy, type LucideIcon, UserPlus, Wallet } from "lucide-react";
 
 type Step = {
   name: string;
@@ -80,10 +80,10 @@ export const workflows: readonly Workflow[] = [
     label: "Manage Employees",
     steps: [
       {
-        name: "People & Payroll",
-        moduleSlug: "people-payroll",
-        description: "Manage employee information.",
-        preview: ["Employee", "Role", "Department"],
+        name: "Employee Onboarding",
+        icon: UserPlus,
+        description: "Add a new employee and keep all their information in one place.",
+        preview: ["Employee", "Role", "Joining date"],
       },
       {
         name: "Attendance",
@@ -110,22 +110,28 @@ export const workflows: readonly Workflow[] = [
     label: "Support Customers",
     steps: [
       {
+        name: "Customer Request",
+        icon: LifeBuoy,
+        description: "A customer asks for help or raises a complaint.",
+        preview: ["Customer", "Request", "Date"],
+      },
+      {
         name: "Customer Service",
         moduleSlug: "customer-service",
-        description: "Manage customer requests and interactions.",
-        preview: ["Customer", "Request", "Status"],
+        description: "Assign the request and follow it until it is solved.",
+        preview: ["Request", "Assigned to", "Status"],
       },
       {
         name: "Sales & CRM",
         moduleSlug: "sales-crm",
-        description: "Keep customer and sales information connected.",
-        preview: ["Customer", "Enquiry", "Order"],
+        description: "See the customer's orders and past chats while helping them.",
+        preview: ["Customer", "Last order", "Notes"],
       },
       {
         name: "Business Intelligence",
         moduleSlug: "business-intelligence-analytics",
-        description: "Understand customer activity and business performance.",
-        preview: ["Customers", "Requests", "Activity"],
+        description: "See common problems and how quickly they are solved.",
+        preview: ["Requests", "Solved", "Time taken"],
       },
     ],
   },

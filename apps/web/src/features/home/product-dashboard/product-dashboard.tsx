@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { type CSSProperties, useRef, useState } from "react";
 
 import robotImage from "@/assets/brand/assistant-robot.png";
 import { useElementWidth } from "@/hooks/use-element-width";
@@ -9,7 +9,7 @@ import { useIsInView } from "@/hooks/use-in-view";
 import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
 
 import { AssistantPanel } from "./assistant-panel";
-import { DashboardView } from "./dashboard-view";
+import { DashboardView, Sidebar } from "./dashboard-view";
 import { useAssistantChat } from "./use-assistant-chat";
 import { useDashboardTour, type TourView } from "./use-dashboard-tour";
 
@@ -17,6 +17,32 @@ const SCREEN_WIDTH = 1440;
 const SCREEN_HEIGHT = 830;
 const NARROW_BREAKPOINT = 720;
 const MOVE_TRANSITION = "900ms cubic-bezier(0.65, 0, 0.35, 1)";
+
+/** The space between an outlined area and its explanation, in pixels. */
+const EXPLANATION_GAP = 12;
+/** About how tall the explanation is, used to choose between below and above the area. */
+const EXPLANATION_HEIGHT = 140;
+/** An area taller than this share of the picture gets its explanation beside it, not below. */
+const TALL_AREA_SHARE = 0.6;
+
+/**
+ * Puts the explanation next to the outlined area, never on top of it: below it when there is room,
+ * otherwise above it, and beside it for a tall area such as a side panel.
+ */
+const explanationPosition = ({ highlight, cursor, box }: TourView): CSSProperties => {
+  const { x, y, width, height } = highlight;
+  if (height > box.height * TALL_AREA_SHARE) {
+    const top = Math.max(EXPLANATION_GAP, Math.min(cursor.y, box.height - EXPLANATION_HEIGHT));
+    return x > box.width / 2
+      ? { top, right: box.width - x + EXPLANATION_GAP }
+      : { top, left: x + width + EXPLANATION_GAP };
+  }
+  const left = `min(${String(x)}px, calc(100% - var(--card) - ${String(EXPLANATION_GAP)}px))`;
+  const hasRoomBelow = y + height + EXPLANATION_GAP + EXPLANATION_HEIGHT <= box.height;
+  return hasRoomBelow
+    ? { left, top: y + height + EXPLANATION_GAP }
+    : { left, bottom: box.height - y + EXPLANATION_GAP };
+};
 
 const TourOverlay = ({ view }: { view: TourView }) => (
   <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-30">
@@ -49,11 +75,11 @@ const TourOverlay = ({ view }: { view: TourView }) => (
     </svg>
     <div
       key={view.label}
-      className={`absolute z-10 ${view.vertical === "above" ? "-mt-3 -translate-y-full" : "mt-5"} ${view.side === "left" ? "-ml-3 -translate-x-full" : "ml-5"}`}
-      style={{ left: view.cursor.x, top: view.cursor.y }}
+      className="absolute z-10 w-44 [--card:11rem] sm:w-64 sm:[--card:16rem]"
+      style={explanationPosition(view)}
     >
       <div
-        className="w-44 rounded-xl bg-brand-navy p-3 text-left text-white shadow-xl motion-safe:animate-reveal sm:w-64 sm:p-4"
+        className="rounded-xl bg-brand-navy p-3 text-left text-white shadow-xl motion-safe:animate-reveal sm:p-4"
         style={{ animationDelay: "700ms" }}
       >
         <p className="text-xs font-semibold text-brand-light sm:text-sm">{view.label}</p>
@@ -74,6 +100,7 @@ export const ProductDashboard = () => {
   const chat = useAssistantChat();
   const [isStopped, setIsStopped] = useState(false);
   const [isAssistantOpen, setIsAssistantOpen] = useState(false);
+  const [isMoreOpen, setIsMoreOpen] = useState(false);
   const boxElement = useRef<HTMLDivElement | null>(null);
 
   const isNarrow = boxWidth !== null && boxWidth < NARROW_BREAKPOINT;
@@ -84,6 +111,7 @@ export const ProductDashboard = () => {
     chat,
     isRunning: isTouring,
     onAssistantOpen: setIsAssistantOpen,
+    onMoreOpen: setIsMoreOpen,
   });
 
   return (
@@ -111,7 +139,16 @@ export const ProductDashboard = () => {
           }}
         >
           <div className="relative flex h-full overflow-hidden">
-            <DashboardView />
+            <DashboardView
+              sidebar={
+                <Sidebar
+                  isMoreOpen={isMoreOpen}
+                  onMoreToggle={() => {
+                    setIsMoreOpen((isOpen) => !isOpen);
+                  }}
+                />
+              }
+            />
             <div
               className={`h-full shrink-0 overflow-hidden transition-[width] duration-500 ease-out ${isAssistantOpen ? "w-85" : "w-0"}`}
               {...(isAssistantOpen ? {} : { inert: true })}
@@ -131,7 +168,7 @@ export const ProductDashboard = () => {
                 onClick={() => {
                   setIsAssistantOpen(true);
                 }}
-                className="absolute right-0 bottom-0 z-30 flex size-12 items-center justify-center rounded-tl-2xl border-t border-l border-app-blue/20 bg-app-blue-soft"
+                className="absolute right-0 bottom-6 z-30 flex size-12 items-center justify-center rounded-l-2xl border-y border-l border-app-blue/20 bg-app-blue-soft"
               >
                 <Image src={robotImage} alt="" className="w-7" sizes="28px" />
               </button>

@@ -6,6 +6,7 @@ import { BrandLogo } from "./brand-logo";
 import { ChevronDownIcon } from "./chevron-down-icon";
 import { MobileMenu } from "./mobile-menu";
 import { ModulesMenu } from "./modules-menu";
+import { SolutionsMenu } from "./solutions-menu";
 import { ThemeToggle } from "./theme-toggle";
 
 export const SiteHeader = () => (
@@ -18,6 +19,7 @@ export const SiteHeader = () => (
           {primaryNav.map((item) => (
             <li key={item.href}>
               {item.menu === "modules" ? <ModulesMenu item={item} /> : null}
+              {item.menu === "solutions" ? <SolutionsMenu item={item} /> : null}
               {item.menu === undefined ? (
                 <a
                   href={item.href}

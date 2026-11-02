@@ -1,15 +1,15 @@
 import { useEffect, useRef, useState, type RefObject } from "react";
 
-import { ASSISTANT_STEP, TOUR_QUESTION, tourSteps } from "./dashboard-tour";
+import { ASSISTANT_STEP, MORE_MODULES_STEP, TOUR_QUESTION, tourSteps } from "./dashboard-tour";
 import type { AssistantChat } from "./use-assistant-chat";
 
 export type TourView = {
   highlight: { x: number; y: number; width: number; height: number };
   cursor: { x: number; y: number };
+  /** The size of the picture the areas are measured in. */
+  box: { width: number; height: number };
   label: string;
   description: string;
-  side: "left" | "right";
-  vertical: "above" | "below";
 };
 
 const STEP_MS = 3800;
@@ -25,7 +25,12 @@ type TourOptions = {
   isRunning: boolean;
   /** Opens or closes the assistant panel. */
   onAssistantOpen: (isOpen: boolean) => void;
+  /** Opens or closes the window of the remaining modules. */
+  onMoreOpen: (isOpen: boolean) => void;
 };
+
+/** How long the cursor rests on the "more" button before it clicks. */
+const CLICK_PAUSE_MS = 1100;
 
 /**
  * A cursor that glides over the dashboard on its own, highlighting each area and explaining it,
@@ -36,14 +41,17 @@ export const useDashboardTour = ({
   chat,
   isRunning,
   onAssistantOpen,
+  onMoreOpen,
 }: TourOptions): TourView | null => {
   const [view, setView] = useState<TourView | null>(null);
   const chatRef = useRef(chat);
   const openRef = useRef(onAssistantOpen);
+  const moreRef = useRef(onMoreOpen);
 
   useEffect(() => {
     chatRef.current = chat;
     openRef.current = onAssistantOpen;
+    moreRef.current = onMoreOpen;
   });
 
   useEffect(() => {
@@ -71,7 +79,10 @@ export const useDashboardTour = ({
       const top = Math.max(EDGE_INSET, rect.top - boxRect.top);
       const right = Math.min(boxRect.width - EDGE_INSET, rect.right - boxRect.left);
       const bottom = Math.min(boxRect.height - EDGE_INSET, rect.bottom - boxRect.top);
-      return { x: left, y: top, width: right - left, height: bottom - top };
+      return {
+        area: { x: left, y: top, width: right - left, height: bottom - top },
+        box: { width: boxRect.width, height: boxRect.height },
+      };
     };
 
     const point = (
@@ -79,18 +90,16 @@ export const useDashboardTour = ({
       label: string,
       description: string,
       anchor: { x: number; y: number },
-      side: "left" | "right",
-      vertical: "above" | "below",
     ) => {
-      const area = measure(target);
-      if (!area) return;
+      const measured = measure(target);
+      if (!measured) return;
+      const { area, box } = measured;
       setView({
         highlight: area,
         cursor: { x: area.x + area.width * anchor.x, y: area.y + area.height * anchor.y },
+        box,
         label,
         description,
-        side,
-        vertical,
       });
     };
 
@@ -100,10 +109,23 @@ export const useDashboardTour = ({
         setView(null);
         chatRef.current.reset();
         openRef.current(false);
+        moreRef.current(false);
         await wait(PANEL_MS + 200);
         for (const step of tourSteps) {
-          point(step.target, step.label, step.description, step.anchor, step.side, step.vertical);
+          point(step.target, step.label, step.description, step.anchor);
           await wait(STEP_MS);
+          if (step.target === "modules") {
+            // The cursor goes to the "more" button, clicks it, and the remaining modules open.
+            const { button, window } = MORE_MODULES_STEP;
+            point(button.target, button.label, button.description, button.anchor);
+            await wait(MOVE_MS + CLICK_PAUSE_MS);
+            moreRef.current(true);
+            await wait(MOVE_MS / 3);
+            point(window.target, window.label, window.description, window.anchor);
+            await wait(STEP_MS);
+            moreRef.current(false);
+            await wait(MOVE_MS / 3);
+          }
         }
 
         // Clear the outline before the panel opens, so it cannot sit over the panel while the
@@ -111,14 +133,10 @@ export const useDashboardTour = ({
         setView(null);
         openRef.current(true);
         await wait(MOVE_MS);
-        point(
-          ASSISTANT_STEP.target,
-          ASSISTANT_STEP.label,
-          ASSISTANT_STEP.description,
-          { x: 0.02, y: 0.9 },
-          "left",
-          "above",
-        );
+        point(ASSISTANT_STEP.target, ASSISTANT_STEP.label, ASSISTANT_STEP.description, {
+          x: 0.02,
+          y: 0.9,
+        });
         await wait(MOVE_MS + 400);
         for (let length = 1; length <= TOUR_QUESTION.length; length += 1) {
           chatRef.current.setDraft(TOUR_QUESTION.slice(0, length));

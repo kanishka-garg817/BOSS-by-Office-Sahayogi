@@ -2,104 +2,130 @@ import Image from "next/image";
 import Link from "next/link";
 
 import markImage from "@/assets/brand/boss-mark.png";
+import { LiftAssistantMarker } from "@/components/layout/lift-assistant-marker";
 import { siteConfig } from "@/lib/site";
 
 import { FooterSocial } from "./footer-social";
-import { FooterFloatingIcons } from "./footer-floating-icons";
-import { footerColumns, type FooterLink } from "./footer-links";
+import { footerColumns, legalLinks, type FooterLink } from "./footer-links";
 
 const linkClass =
-  "inline-flex min-h-8 items-center rounded-md text-sm text-white/75 transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white";
+  "inline-flex min-h-8 items-center rounded-md text-sm text-light-ink/70 transition-colors hover:text-brand-blue focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue";
 
-const FooterAnchor = ({ link }: { link: FooterLink }) => {
-  if ("solutionSlug" in link) {
-    return (
-      <Link href={`/solutions/${link.solutionSlug}`} className={linkClass}>
-        {link.label}
-      </Link>
-    );
-  }
+const legalLinkClass =
+  "rounded-md transition-colors hover:text-brand-blue focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue";
+
+const FooterAnchor = ({ link, className }: { link: FooterLink; className?: string }) => {
   if ("isPlanned" in link) {
     return (
-      <a href={link.href} className={linkClass}>
+      <a href={link.href} className={className ?? linkClass}>
         {link.label}
       </a>
     );
   }
   return (
-    <Link href={link.href} className={linkClass}>
+    <Link href={link.href} className={className ?? linkClass}>
       {link.label}
     </Link>
   );
 };
 
-const linkKey = (link: FooterLink): string =>
-  "solutionSlug" in link ? link.solutionSlug : link.href;
+/** The soft blue waves in the bottom-left corner of the footer. */
+const FooterWaves = () => (
+  <>
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 1200 420"
+      preserveAspectRatio="none"
+      className="pointer-events-none absolute bottom-0 left-0 -z-10 h-80 w-3/4 text-brand-blue"
+    >
+      <path
+        d="M0 120 C 180 200, 300 330, 520 350 C 700 366, 860 320, 1200 420 L0 420 Z"
+        fill="currentColor"
+        fillOpacity="0.07"
+      />
+      <path
+        d="M0 250 C 160 270, 260 360, 460 372 C 640 382, 800 350, 1000 420 L0 420 Z"
+        fill="currentColor"
+        fillOpacity="0.1"
+      />
+    </svg>
+  </>
+);
 
 export const SiteFooter = () => (
-  <footer className="relative isolate overflow-hidden bg-linear-to-br from-brand-blue via-brand-blue to-brand-navy text-white">
-    <FooterFloatingIcons />
-    <div
-      aria-hidden="true"
-      className="pointer-events-none absolute -top-32 -left-24 -z-10 size-96 rounded-full bg-white/10 blur-3xl"
-    />
+  <footer className="relative isolate overflow-hidden border-t border-light-ink/10 bg-footer text-light-ink">
+    <FooterWaves />
 
-    <div className="mx-auto max-w-6xl px-4 pt-16 sm:px-6 lg:px-8">
-      <div className="grid gap-12 lg:grid-cols-[1fr_2fr]">
-        <div>
-          <Link
-            href="/"
-            aria-label={`${siteConfig.name} by ${siteConfig.publisher} — home`}
-            className="inline-flex items-center gap-3 rounded-md focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+    <div className="mx-auto max-w-screen-2xl px-4 pt-20 sm:px-6 lg:px-12">
+      <div className="relative">
+        <div className="grid gap-12 lg:grid-cols-[1fr_2fr] lg:gap-0">
+          <div className="lg:pr-10">
+            <Link
+              href="/"
+              aria-label={`${siteConfig.name} by ${siteConfig.publisher} — home`}
+              className="inline-flex items-center gap-3 rounded-md focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-blue"
+            >
+              <Image src={markImage} alt="" className="h-12 w-auto" sizes="48px" />
+              <span className="text-3xl leading-none font-extrabold">BoSS</span>
+            </Link>
+            <p className="mt-6 max-w-sm text-lg font-semibold text-balance">
+              Business Operations &amp; System Suite
+            </p>
+            <p className="mt-2 max-w-sm text-sm text-pretty text-light-ink/70">
+              Sales, finance, inventory, people and operations — all in one place, so you can run
+              and grow your business with ease.
+            </p>
+            <FooterSocial />
+          </div>
+
+          <nav
+            aria-label="Footer"
+            className="relative grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-[1fr_1.8fr_1.6fr_1fr]"
           >
-            <span className="flex size-11 items-center justify-center rounded-xl bg-white shadow-lg">
-              <Image src={markImage} alt="" className="h-7 w-auto" sizes="28px" />
-            </span>
-            <span className="flex flex-col leading-none">
-              <span className="text-xl font-extrabold">BOSS</span>
-              <span className="mt-0.5 text-xs font-medium text-white/80">by Office Sahayogi</span>
-            </span>
-          </Link>
-          <p className="mt-5 max-w-sm text-base font-semibold text-balance">
-            Business Operations &amp; System Suite
-          </p>
-          <p className="mt-2 max-w-sm text-sm text-pretty text-white/75">
-            Sales, accounts, stock and people, connected in one place and easy for everyone on your
-            team.
-          </p>
-          <FooterSocial />
+            {footerColumns.map((column) => (
+              <div key={column.heading} className="lg:pl-8">
+                <h2 className="text-sm font-bold tracking-widest text-light-ink uppercase">
+                  {column.headingHref ? (
+                    <Link href={column.headingHref} className={legalLinkClass}>
+                      {column.heading}
+                    </Link>
+                  ) : (
+                    column.heading
+                  )}
+                </h2>
+                <ul className="mt-5 space-y-1">
+                  {column.links.map((link) => (
+                    <li key={link.label}>
+                      <FooterAnchor link={link} />
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </nav>
         </div>
-
-        <nav aria-label="Footer" className="grid grid-cols-2 gap-8 sm:grid-cols-[1fr_1.8fr_1fr]">
-          {footerColumns.map((column) => (
-            <div key={column.heading}>
-              <h2 className="text-sm font-bold tracking-widest text-white uppercase">
-                {column.heading}
-              </h2>
-              <ul className="mt-4 space-y-1">
-                {column.links.map((link) => (
-                  <li key={linkKey(link)}>
-                    <FooterAnchor link={link} />
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </nav>
+        <p
+          aria-hidden="true"
+          className="pointer-events-none mt-6 mb-6 hidden text-center text-[6rem] leading-none font-semibold tracking-tight whitespace-nowrap text-brand-blue/10 select-none lg:block xl:text-[8rem]"
+        >
+          Business Simplified
+        </p>
       </div>
 
-      <p
-        aria-hidden="true"
-        className="mt-12 -mb-4 text-center text-[22vw] leading-none font-extrabold tracking-tight text-white/10 select-none lg:text-[14rem]"
-      >
-        BOSS
-      </p>
-
-      <div className="relative flex flex-col items-center justify-between gap-2 border-t border-white/15 py-6 text-xs text-white/70 sm:flex-row">
+      <div className="relative flex flex-col items-center justify-between gap-2 border-t border-light-ink/10 py-6 text-xs text-light-ink/70 sm:flex-row">
+        <LiftAssistantMarker />
         <p>
-          © {new Date().getFullYear()} {siteConfig.publisher}. All rights reserved.
+          © {new Date().getFullYear()} {siteConfig.legalName} (CIN {siteConfig.cin}) · Built in
+          India
         </p>
-        <p>BoSS is a product of {siteConfig.publisher}.</p>
+        <ul className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
+          {legalLinks.map((link, index) => (
+            <li key={link.label} className="flex items-center gap-3">
+              {index > 0 ? <span aria-hidden="true" className="h-3 w-px bg-light-ink/20" /> : null}
+              <FooterAnchor link={link} className={legalLinkClass} />
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   </footer>

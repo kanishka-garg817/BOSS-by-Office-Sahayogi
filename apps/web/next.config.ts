@@ -21,7 +21,7 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   typedRoutes: true,
   // Workspace packages are shipped as TypeScript source.
-  transpilePackages: ["@boss/db"],
+  transpilePackages: ["@boss/db", "@boss/ui"],
   // `pg` uses Node internals and must not be bundled.
   serverExternalPackages: ["pg"],
   images: {

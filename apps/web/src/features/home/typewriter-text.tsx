@@ -20,8 +20,8 @@ type Token =
       characters: { character: string; index: number }[];
     };
 
-const START_DELAY_MS = 200;
-const STEP_DELAY_MS = 45;
+const START_DELAY_MS = 100;
+const STEP_DELAY_MS = 28;
 
 /** Splits segments into words and spaces, numbering every character for the typing order. */
 const tokenize = (segments: readonly TypewriterSegment[]): Token[] => {

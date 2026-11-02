@@ -26,7 +26,7 @@ export const ClaimScreen = ({ form, onChange, onSubmit, onClose }: ClaimScreenPr
       >
         <X className="size-5" />
       </button>
-      <h2 className="text-lg font-bold text-app-ink">New claim</h2>
+      <p className="text-lg font-bold text-app-ink">New claim</p>
     </header>
     <div className="flex-1 space-y-4 overflow-y-auto px-4 pb-4">
       <p className="flex items-center gap-3 rounded-2xl bg-app-blue p-3 text-sm text-white">

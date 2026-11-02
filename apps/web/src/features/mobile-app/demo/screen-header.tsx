@@ -19,7 +19,7 @@ export const ScreenHeader = ({ title, onBack, action }: ScreenHeaderProps) => (
     >
       <ArrowLeft className="size-5" />
     </button>
-    <h2 className="flex-1 text-lg font-bold text-app-ink">{title}</h2>
+    <p className="flex-1 text-lg font-bold text-app-ink">{title}</p>
     {action}
     <Search className="size-5 text-app-ink" aria-hidden="true" />
     <Bell className="size-5 text-app-ink" aria-hidden="true" />

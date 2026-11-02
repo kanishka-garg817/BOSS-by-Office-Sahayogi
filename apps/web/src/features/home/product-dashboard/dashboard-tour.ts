@@ -6,9 +6,6 @@ export type TourStep = {
   description: string;
   /** Where the cursor lands inside the area, as a share of its width and height. */
   anchor: { x: number; y: number };
-  /** Which side of the cursor the explanation opens on, and whether above or below it. */
-  side: "left" | "right";
-  vertical: "above" | "below";
 };
 
 /** Describes only what the dashboard shows. */
@@ -20,8 +17,6 @@ export const tourSteps: readonly TourStep[] = [
     description:
       "Switch between Finance & Accounting, Sales & CRM, Procurement, Inventory and more.",
     anchor: { x: 0.5, y: 0.22 },
-    side: "right",
-    vertical: "below",
   },
   {
     id: "key-numbers",
@@ -29,8 +24,6 @@ export const tourSteps: readonly TourStep[] = [
     label: "Key numbers",
     description: "Sales, margin, cash in bank, receivables and inventory value, all at a glance.",
     anchor: { x: 0.4, y: 0.3 },
-    side: "right",
-    vertical: "below",
   },
   {
     id: "calendar",
@@ -38,8 +31,6 @@ export const tourSteps: readonly TourStep[] = [
     label: "Calendar",
     description: "Your schedule, right beside your numbers.",
     anchor: { x: 0.5, y: 0.4 },
-    side: "left",
-    vertical: "below",
   },
   {
     id: "categories",
@@ -47,8 +38,6 @@ export const tourSteps: readonly TourStep[] = [
     label: "Items by category",
     description: "Find out which product categories bring in the most sales.",
     anchor: { x: 0.4, y: 0.55 },
-    side: "right",
-    vertical: "above",
   },
   {
     id: "revenue",
@@ -56,8 +45,6 @@ export const tourSteps: readonly TourStep[] = [
     label: "Revenue vs expense",
     description: "See how money coming in compares with money going out, month by month.",
     anchor: { x: 0.45, y: 0.55 },
-    side: "left",
-    vertical: "above",
   },
   {
     id: "glance",
@@ -65,10 +52,25 @@ export const tourSteps: readonly TourStep[] = [
     label: "Modules at a glance",
     description: "Every module you use, with a line on what it covers.",
     anchor: { x: 0.4, y: 0.6 },
-    side: "right",
-    vertical: "above",
   },
 ];
+
+/** The step where the cursor opens the window of the remaining modules from the "more" button. */
+export const MORE_MODULES_STEP = {
+  button: {
+    target: "more",
+    label: "View more",
+    description: "The modules that do not fit in the bar are behind this button.",
+    anchor: { x: 0.5, y: 0.4 },
+  },
+  window: {
+    target: "more-window",
+    label: "More modules",
+    description:
+      "Marketing, customer service, assets, work, travel, compliance, documents and analytics are one click away.",
+    anchor: { x: 0.5, y: 0.12 },
+  },
+} as const;
 
 export const ASSISTANT_STEP = {
   target: "assistant",

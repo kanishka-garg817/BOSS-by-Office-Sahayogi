@@ -30,7 +30,7 @@ const cardSizeClass =
 const CARD_GAP = 20;
 
 const arrowButtonClass =
-  "flex size-12 items-center justify-center rounded-full bg-brand-blue text-white shadow-lg shadow-brand-blue/30 transition hover:brightness-110 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-brand-blue disabled:cursor-not-allowed disabled:opacity-40 disabled:shadow-none";
+  "flex size-12 items-center justify-center rounded-full bg-brand-blue text-white shadow-lg shadow-brand-blue/30 transition hover:brightness-110 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-brand-blue";
 
 const GroupCard = ({
   group,
@@ -75,7 +75,7 @@ const GroupCard = ({
   </div>
 );
 
-/** The groups side by side in one row. The arrows move to the next cards; a swipe works too. */
+/** The groups side by side in one row. The arrows move to the next cards and only appear when there is somewhere to go; a swipe works too. */
 export const GroupCarousel = ({ groups, detailsPath }: GroupCarouselProps) => {
   const trackRef = useRef<HTMLUListElement>(null);
   const isReducedMotion = usePrefersReducedMotion();
@@ -122,28 +122,30 @@ export const GroupCarousel = ({ groups, detailsPath }: GroupCarouselProps) => {
         ))}
       </ul>
 
-      <button
-        type="button"
-        aria-label="Previous group"
-        disabled={!canPrevious}
-        onClick={() => {
-          move(-1);
-        }}
-        className={`${arrowButtonClass} absolute top-1/2 left-2 z-10 -translate-y-1/2 lg:-left-6`}
-      >
-        <ArrowLeft aria-hidden="true" className="size-5" />
-      </button>
-      <button
-        type="button"
-        aria-label="Next group"
-        disabled={!canNext}
-        onClick={() => {
-          move(1);
-        }}
-        className={`${arrowButtonClass} absolute top-1/2 right-2 z-10 -translate-y-1/2 lg:-right-6`}
-      >
-        <ArrowRight aria-hidden="true" className="size-5" />
-      </button>
+      {canPrevious ? (
+        <button
+          type="button"
+          aria-label="Previous group"
+          onClick={() => {
+            move(-1);
+          }}
+          className={`${arrowButtonClass} absolute top-1/2 left-2 z-10 -translate-y-1/2 lg:-left-6`}
+        >
+          <ArrowLeft aria-hidden="true" className="size-5" />
+        </button>
+      ) : null}
+      {canNext ? (
+        <button
+          type="button"
+          aria-label="Next group"
+          onClick={() => {
+            move(1);
+          }}
+          className={`${arrowButtonClass} absolute top-1/2 right-2 z-10 -translate-y-1/2 lg:-right-6`}
+        >
+          <ArrowRight aria-hidden="true" className="size-5" />
+        </button>
+      ) : null}
     </div>
   );
 };

@@ -50,7 +50,7 @@ export type BossModule = {
   group: ModuleGroupId;
 };
 
-/** Every BOSS module, in display order: grouped by family. */
+/** Every BoSS module, in display order: grouped by family. */
 export const modules: readonly BossModule[] = [
   {
     slug: "finance-accounting",

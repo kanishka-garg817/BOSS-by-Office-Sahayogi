@@ -1,4 +1,4 @@
-import { Eyebrow } from "@/components/ui/eyebrow";
+import { Eyebrow } from "@boss/ui";
 
 type SectionHeadingProps = {
   id: string;

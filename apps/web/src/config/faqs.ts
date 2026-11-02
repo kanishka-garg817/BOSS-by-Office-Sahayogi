@@ -30,7 +30,7 @@ export const homeFaqs: readonly Faq[] = [
     id: "integrations",
     question: "Does BoSS work with the tools we already use?",
     answer:
-      "BoSS offers integrations with tools such as Tally, Busy, Marg, Gmail, WhatsApp, Shopify, Razorpay and several banks, and there is a custom API for others. Use the integrations section on this page to see them.",
+      "BoSS offers integrations with tools such as Tally, Busy, Marg, Gmail, Google Sheets, Outlook, WhatsApp, Shopify, WooCommerce and Kotak Mahindra Bank, and there is a custom API for others. Use the integrations section on this page to see them.",
   },
   {
     id: "mobile-app",

@@ -22,7 +22,7 @@ export const PayslipsScreen = ({ onBack }: { onBack: () => void }) => (
         </span>
       </div>
 
-      <h3 className="text-lg font-bold text-app-ink">Monthly statements</h3>
+      <p className="text-lg font-bold text-app-ink">Monthly statements</p>
       {payslips.map((payslip) => (
         <Card key={payslip.id} className="flex items-center gap-3 p-3">
           <span

@@ -4,9 +4,10 @@ import Script from "next/script";
 
 import { AssistantMascot } from "@/components/layout/assistant-mascot";
 import { SiteFooter } from "@/components/layout/footer/site-footer";
+import { ScrollToTopOnNavigation } from "@/components/layout/scroll-to-top-on-navigation";
 import { SiteHeader } from "@/components/layout/site-header";
 import { isProduction } from "@/env";
-import { siteConfig } from "@/lib/site";
+import { SOCIAL_IMAGE_PATH, siteConfig } from "@/lib/site";
 import { THEME_INIT_SCRIPT } from "@/lib/theme";
 
 import "./globals.css";
@@ -19,16 +20,37 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
-  title: { default: siteConfig.name, template: `%s | ${siteConfig.name}` },
+  title: {
+    default: `${siteConfig.name} | ${siteConfig.tagline}`,
+    template: `%s | ${siteConfig.name}`,
+  },
+  description: siteConfig.description,
   applicationName: siteConfig.name,
-  openGraph: { siteName: siteConfig.name, type: "website", locale: "en_US" },
-  twitter: { card: "summary_large_image" },
-  robots: isProduction ? { index: true, follow: true } : { index: false, follow: false },
+  keywords: [...siteConfig.keywords],
+  authors: [{ name: siteConfig.publisher, url: siteConfig.url }],
+  creator: siteConfig.publisher,
+  publisher: siteConfig.legalName,
+  category: "business",
+  formatDetection: { telephone: false, email: false, address: false },
+  openGraph: {
+    siteName: siteConfig.name,
+    type: "website",
+    locale: siteConfig.openGraphLocale,
+    images: [{ url: SOCIAL_IMAGE_PATH, width: 1200, height: 630 }],
+  },
+  twitter: { card: "summary_large_image", images: [SOCIAL_IMAGE_PATH] },
+  robots: isProduction
+    ? { index: true, follow: true, googleBot: { "max-image-preview": "large", "max-snippet": -1 } }
+    : { index: false, follow: false },
 };
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: siteConfig.themeColor.light },
+    { media: "(prefers-color-scheme: dark)", color: siteConfig.themeColor.dark },
+  ],
 };
 
 type RootLayoutProps = {
@@ -47,6 +69,7 @@ const RootLayout = ({ children }: RootLayoutProps) => (
       >
         Skip to main content
       </a>
+      <ScrollToTopOnNavigation />
       <SiteHeader />
       <main id="main-content" className="relative isolate overflow-x-clip">
         {children}

@@ -139,9 +139,9 @@ export const CapabilityMarquee = () => {
           >
             <X className="size-5" aria-hidden="true" />
           </button>
-          <h2 id={titleId} className="pr-8 text-2xl font-extrabold tracking-tight text-ink">
+          <p id={titleId} className="pr-8 text-2xl font-extrabold tracking-tight text-ink">
             Want to know more about this?
-          </h2>
+          </p>
           <p className="mt-3 text-base text-pretty text-ink/75">
             Book a demo and we will show you how it works for your business.
           </p>

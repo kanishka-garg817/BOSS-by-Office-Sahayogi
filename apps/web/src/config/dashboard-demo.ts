@@ -26,7 +26,7 @@ export const moduleSummaries: Record<string, string> = {
   manufacturing: "Bills of material and production runs",
 };
 
-/** The modules in the left bar, in order. */
+/** The modules in the left bar, in order. The rest are behind its "more" button. */
 export const sidebarModuleSlugs = [
   "finance-accounting",
   "sales-crm",
@@ -36,6 +36,20 @@ export const sidebarModuleSlugs = [
   "manufacturing",
   "supply-chain-logistics",
   "people-payroll",
+  "pos-retail-billing",
+] as const;
+
+/** The modules in the small window that the "more" button opens, in order. */
+export const moreModuleSlugs = [
+  "marketing-commerce",
+  "customer-service",
+  "asset-management",
+  "work-management",
+  "travel-expense",
+  "self-service-portal",
+  "compliance-legal",
+  "document-management",
+  "business-intelligence-analytics",
 ] as const;
 
 export type Kpi = {

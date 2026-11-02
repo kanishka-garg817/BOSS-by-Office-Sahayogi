@@ -1,6 +1,6 @@
 import { LockKeyhole, ScrollText, Smartphone } from "lucide-react";
 
-import { Eyebrow } from "@/components/ui/eyebrow";
+import { Eyebrow } from "@boss/ui";
 import { securityPoints } from "@/config/mobile-app";
 
 import { LockDemo } from "./lock-demo";

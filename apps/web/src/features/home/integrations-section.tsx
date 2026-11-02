@@ -1,4 +1,4 @@
-import { Eyebrow } from "@/components/ui/eyebrow";
+import { Eyebrow } from "@boss/ui";
 import { ImmersiveMarker } from "@/components/ui/immersive-marker";
 import { SectionBackdrop } from "@/components/ui/section-backdrop";
 import { IntegrationOrbit } from "@/features/integrations/integration-orbit";

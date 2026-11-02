@@ -1,0 +1,26 @@
+{
+  "name": "@boss/ui",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Shared UI design system components and design tokens for BoSS",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./tokens": "./src/eyebrow/eyebrow.tokens.ts"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@boss/config": "workspace:*",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "eslint": "9.39.5",
+    "typescript": "6.0.3"
+  }
+}

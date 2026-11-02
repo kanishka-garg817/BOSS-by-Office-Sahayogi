@@ -64,7 +64,7 @@ export const AttendanceScreen = ({
       </Card>
 
       <Card className="space-y-3 p-4">
-        <h4 className="text-base font-bold text-app-ink">This Week</h4>
+        <p className="text-base font-bold text-app-ink">This Week</p>
         <div className="grid grid-cols-3 gap-2 text-sm">
           <span>
             <span className="block text-xs text-app-muted">Total Hours</span>
@@ -82,7 +82,7 @@ export const AttendanceScreen = ({
       </Card>
 
       <Card className="space-y-3 p-4">
-        <h4 className="text-base font-bold text-app-ink">This Month</h4>
+        <p className="text-base font-bold text-app-ink">This Month</p>
         <div className="grid grid-cols-2 gap-2.5">
           <span className="rounded-xl bg-app-blue-soft p-3">
             <span className="block text-xs text-app-blue">Worked Hours</span>

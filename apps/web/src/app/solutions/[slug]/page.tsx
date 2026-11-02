@@ -1,3 +1,4 @@
+import { JsonLd } from "@/components/json-ld";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
@@ -11,7 +12,8 @@ import {
   SolutionSolves,
 } from "@/features/solutions/solution-details";
 import { SolutionHero } from "@/features/solutions/solution-hero";
-import { createPageMetadata } from "@/lib/seo";
+import { createPageMetadata, toMetaDescription } from "@/lib/seo";
+import { breadcrumbStructuredData } from "@/lib/structured-data";
 
 type SolutionPageProps = {
   params: Promise<{ slug: string }>;
@@ -28,7 +30,7 @@ export const generateMetadata = async ({ params }: SolutionPageProps): Promise<M
   if (!solution) return {};
   return createPageMetadata({
     title: solution.name,
-    description: solution.summary,
+    description: toMetaDescription(solution.summary),
     path: `/solutions/${solution.slug}`,
   });
 };
@@ -40,8 +42,13 @@ const SolutionPage = async ({ params }: SolutionPageProps) => {
 
   const otherSolutions = solutions.filter((item) => item.slug !== solution.slug).slice(0, 3);
 
+  const breadcrumbs = breadcrumbStructuredData([
+    { name: solution.name, path: `/solutions/${solution.slug}` },
+  ]);
+
   return (
     <>
+      <JsonLd data={breadcrumbs} />
       <SolutionHero solution={solution} />
       <SolutionChallenges solution={solution} />
       <SolutionSolves solution={solution} />
