@@ -12,8 +12,18 @@ const END_TOLERANCE_PX = 4;
 const arrowClass =
   "absolute top-1/2 z-10 flex size-11 -translate-y-1/2 items-center justify-center rounded-full border border-ink/10 bg-surface text-ink shadow-md transition-colors hover:bg-brand-tint focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue disabled:opacity-40 disabled:hover:bg-surface";
 
+type CardSliderProps = {
+  children: ReactNode;
+  /** Accessible name for the scrolling list of cards. */
+  label: string;
+  /** Accessible name for the "scroll back" button. */
+  previousLabel: string;
+  /** Accessible name for the "scroll forward" button. */
+  nextLabel: string;
+};
+
 /** A row of cards that scrolls sideways one arrow press at a time. */
-export const ProblemSlider = ({ children, label }: { children: ReactNode; label: string }) => {
+export const CardSlider = ({ children, label, previousLabel, nextLabel }: CardSliderProps) => {
   const scrollerRef = useRef<HTMLUListElement>(null);
   const [canGoBack, setCanGoBack] = useState(false);
   const [canGoForward, setCanGoForward] = useState(true);
@@ -56,7 +66,7 @@ export const ProblemSlider = ({ children, label }: { children: ReactNode; label:
       </ul>
       <button
         type="button"
-        aria-label="Previous problems"
+        aria-label={previousLabel}
         disabled={!canGoBack}
         onClick={() => {
           move(-1);
@@ -67,7 +77,7 @@ export const ProblemSlider = ({ children, label }: { children: ReactNode; label:
       </button>
       <button
         type="button"
-        aria-label="Next problems"
+        aria-label={nextLabel}
         disabled={!canGoForward}
         onClick={() => {
           move(1);

@@ -183,7 +183,6 @@ export type HelpItem = {
 export const helpsContent = {
   heading: "How BoSS Supports Your FMCG Operations",
   text: "Connecting inventory, distribution channels, sales, and accounts gives your business the speed and precision required to fulfill high-velocity consumer demand.",
-  photoAlt: "Warehouse team scanning packaged cartons and verifying dispatch sheets",
   items: [
     {
       title: "High-Velocity Inventory & Batch Control",
@@ -352,3 +351,9 @@ export const ctaContent = {
   heading: "Power Your FMCG Business with BoSS",
   text: "See how BoSS connects your inventory, distributor orders, logistics, and accounts in one unified system. Book a personalized demo tailored to your products and distribution workflow.",
 } as const;
+
+export const heroStats = [
+  { value: String(challengesContent.items.length), label: "everyday FMCG challenges solved" },
+  { value: String(workflowContent.stages.length), label: "stage operating workflow, end to end" },
+  { value: "FEFO", label: "batch rotation automated by default" },
+] as const;

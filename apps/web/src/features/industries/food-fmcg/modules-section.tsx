@@ -22,9 +22,9 @@ const relevantModules = modulesContent.slugs.map((slug) => {
 });
 
 export const FmcgModules = () => (
-  <section aria-labelledby="fmcg-modules-heading" className="relative bg-slate-100 py-14 sm:py-20">
-    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-3xl text-center">
+  <section aria-labelledby="fmcg-modules-heading" className="relative py-14 sm:py-20">
+    <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <div className="max-w-2xl">
         <h2
           id="fmcg-modules-heading"
           className="text-3xl leading-tight font-extrabold tracking-tight text-balance text-ink sm:text-4xl"
@@ -34,20 +34,26 @@ export const FmcgModules = () => (
         <p className="mt-3 text-base text-pretty text-ink/70">{modulesContent.text}</p>
       </div>
 
-      <ul className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-        {relevantModules.map(({ bossModule, summary, keywords, page }) => (
+      <ul className="mt-10 overflow-hidden rounded-2xl border border-ink/10 bg-surface">
+        {relevantModules.map(({ bossModule, summary, keywords, page }, index) => (
           <li
             key={bossModule.slug}
-            className="flex flex-col rounded-2xl border border-ink/10 bg-surface p-5 shadow-sm transition hover:border-brand-blue/30 hover:shadow-md"
+            className={`flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:gap-6 sm:p-6 ${
+              index > 0 ? "border-t border-ink/10" : ""
+            }`}
           >
-            <ModuleIcon module={bossModule} size="lg" />
-            <h3 className="mt-4 text-base font-bold text-ink">{bossModule.name}</h3>
-            <p className="mt-1.5 text-sm leading-relaxed text-pretty text-ink/70">{summary}</p>
-            <p className="mt-3 text-xs text-ink/60">{keywords.join(" · ")}</p>
+            <div className="flex items-center gap-4 sm:w-72 sm:shrink-0">
+              <ModuleIcon module={bossModule} size="lg" />
+              <h3 className="text-base font-bold text-ink">{bossModule.name}</h3>
+            </div>
+            <div className="sm:flex-1">
+              <p className="text-sm leading-relaxed text-pretty text-ink/70">{summary}</p>
+              <p className="mt-1.5 text-xs text-ink/60">{keywords.join(" · ")}</p>
+            </div>
             {page ? (
               <Link
                 href={page.href}
-                className="mt-auto inline-flex min-h-11 items-center pt-3 text-sm font-semibold text-brand-blue hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
+                className="inline-flex min-h-11 shrink-0 items-center text-sm font-semibold text-brand-blue hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
               >
                 Explore module →
               </Link>

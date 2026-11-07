@@ -28,16 +28,22 @@ export const RetailElectronicsHero = () => (
         </div>
       </div>
 
-      <div className="relative aspect-4/3 overflow-hidden rounded-3xl border border-ink/10 shadow-xl shadow-brand-navy/10">
-        <Image
-          src={storePhoto}
-          alt={heroContent.photoAlt}
-          fill
-          priority
-          placeholder="blur"
-          sizes="(min-width: 1024px) 560px, 100vw"
-          className="object-cover"
+      <div className="relative">
+        <div
+          aria-hidden="true"
+          className="absolute -top-5 -right-5 -bottom-5 left-10 -z-10 rounded-[2rem] bg-brand-tint sm:-right-6 sm:-bottom-6"
         />
+        <div className="relative aspect-square overflow-hidden rounded-[1.75rem] border border-ink/10 shadow-xl shadow-brand-navy/10 sm:aspect-4/3">
+          <Image
+            src={storePhoto}
+            alt={heroContent.photoAlt}
+            fill
+            priority
+            placeholder="blur"
+            sizes="(min-width: 1024px) 560px, 100vw"
+            className="object-cover"
+          />
+        </div>
       </div>
     </div>
   </section>

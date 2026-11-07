@@ -1,6 +1,7 @@
 import { type ReactNode } from "react";
 
 import { ButtonLink } from "@/components/ui/button-link";
+import { CardSlider } from "@/components/ui/card-slider";
 import { Eyebrow } from "@boss/ui";
 import { SectionBackdrop } from "@/components/ui/section-backdrop";
 import { seeHowBossWorksAction } from "@/config/navigation";
@@ -14,7 +15,6 @@ import {
   ReportsIllustration,
   SalesIllustration,
 } from "./problem-illustrations";
-import { ProblemSlider } from "./problem-slider";
 
 const illustrations = {
   sales: <SalesIllustration />,
@@ -75,11 +75,15 @@ export const ProblemSection = () => (
     </div>
 
     <div className="mx-auto mt-12 max-w-7xl px-7 sm:px-9 lg:px-12">
-      <ProblemSlider label="Business problems">
+      <CardSlider
+        label="Business problems"
+        previousLabel="Previous problems"
+        nextLabel="Next problems"
+      >
         {problems.map((problem, index) => (
           <ProblemCard key={problem.id} problem={problem} number={formatNumber(index)} />
         ))}
-      </ProblemSlider>
+      </CardSlider>
     </div>
 
     <div className="mx-auto mt-12 max-w-2xl px-4 text-center sm:px-6">

@@ -1,15 +1,15 @@
-import { Check } from "lucide-react";
-import Image from "next/image";
+import { Boxes, Check, FileText, ShoppingBag, Truck, type LucideIcon } from "lucide-react";
 
-import warehousePhoto from "@/assets/photos/food-fmcg/warehouse-dispatch.jpg";
+import { CardSlider } from "@/components/ui/card-slider";
 
 import { helpsContent } from "./content";
 
+const itemIcons: readonly LucideIcon[] = [Boxes, ShoppingBag, Truck, FileText];
+
 export const FmcgHelps = () => (
-  <section aria-labelledby="fmcg-helps-heading" className="relative py-14 sm:py-20">
-    <div className="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16 lg:px-8">
-      {/* Left Column: Sticky Title, Description & Warehouse Dispatch Photo */}
-      <div className="lg:sticky lg:top-28 lg:self-start">
+  <section aria-labelledby="fmcg-helps-heading" className="relative bg-slate-100 py-14 sm:py-20">
+    <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <div className="max-w-2xl">
         <h2
           id="fmcg-helps-heading"
           className="text-3xl leading-tight font-extrabold tracking-tight text-balance text-ink sm:text-4xl"
@@ -17,53 +17,51 @@ export const FmcgHelps = () => (
           {helpsContent.heading}
         </h2>
         <p className="mt-4 text-base text-pretty text-ink/70 sm:text-lg">{helpsContent.text}</p>
-        <div className="relative mt-8 aspect-4/3 overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
-          <Image
-            src={warehousePhoto}
-            alt={helpsContent.photoAlt}
-            fill
-            placeholder="blur"
-            sizes="(min-width: 1024px) 440px, 100vw"
-            className="object-cover"
-          />
-        </div>
       </div>
 
-      {/* Right Column: 4 Capability & Outcome Blocks */}
-      <div className="divide-y divide-ink/10">
-        {helpsContent.items.map((item, index) => (
-          <article key={item.title} className="py-8 first:pt-0 last:pb-0">
-            <div className="flex items-baseline gap-3">
-              <span
-                aria-hidden="true"
-                className="text-sm font-bold tracking-wider text-brand-blue tabular-nums"
+      <div className="mt-12">
+        <CardSlider
+          label={helpsContent.heading}
+          previousLabel="Previous capabilities"
+          nextLabel="Next capabilities"
+        >
+          {helpsContent.items.map((item, index) => {
+            const Icon = itemIcons[index];
+            return (
+              <li
+                key={item.title}
+                className="w-full shrink-0 snap-start sm:w-[calc((100%-1.25rem)/2)]"
               >
-                0{index + 1}
-              </span>
-              <h3 className="text-xl font-bold tracking-tight text-ink sm:text-2xl">
-                {item.title}
-              </h3>
-            </div>
-
-            <p className="mt-2.5 text-base leading-relaxed text-ink/75 sm:text-[17px]">
-              {item.text}
-            </p>
-
-            <ul className="mt-4 space-y-2.5">
-              {item.points.map((point) => (
-                <li
-                  key={point}
-                  className="flex items-start gap-2.5 text-sm font-medium text-ink/85 sm:text-base"
-                >
-                  <span className="mt-1 flex size-4 shrink-0 items-center justify-center rounded-full bg-brand-tint text-brand-blue">
-                    <Check className="size-3 stroke-[2.5]" aria-hidden="true" />
-                  </span>
-                  <span>{point}</span>
-                </li>
-              ))}
-            </ul>
-          </article>
-        ))}
+                <article className="flex h-full flex-col rounded-2xl border border-ink/10 bg-surface p-6 shadow-sm sm:p-7">
+                  {Icon ? (
+                    <span className="flex size-11 items-center justify-center rounded-xl bg-blue-50 text-brand-blue">
+                      <Icon className="size-5 stroke-[2]" aria-hidden="true" />
+                    </span>
+                  ) : null}
+                  <h3 className="mt-4 text-lg font-bold tracking-tight text-ink sm:text-xl">
+                    {item.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-pretty text-ink/75 sm:text-base">
+                    {item.text}
+                  </p>
+                  <ul className="mt-4 space-y-2">
+                    {item.points.map((point) => (
+                      <li
+                        key={point}
+                        className="flex items-start gap-2.5 text-sm font-medium text-ink/85"
+                      >
+                        <span className="mt-1 flex size-4 shrink-0 items-center justify-center rounded-full bg-brand-tint text-brand-blue">
+                          <Check className="size-3 stroke-[2.5]" aria-hidden="true" />
+                        </span>
+                        <span>{point}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </article>
+              </li>
+            );
+          })}
+        </CardSlider>
       </div>
     </div>
   </section>

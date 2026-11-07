@@ -43,14 +43,10 @@ export const footerColumns: readonly FooterColumn[] = [
     links: [
       { label: "Retail & Electronics", href: "/industries/retail-electronics" },
       { label: "Manufacturing", href: "/industries/manufacturing" },
-      { label: "Food & FMCG", href: "/industries/food-fmcg", isPlanned: true },
-      { label: "Garments & Fashion", href: "/industries/garments-fashion", isPlanned: true },
-      { label: "Education", href: "/industries/education", isPlanned: true },
-      {
-        label: "Professional Services",
-        href: "/industries/professional-services",
-        isPlanned: true,
-      },
+      { label: "Food & FMCG", href: "/industries/food-fmcg" },
+      { label: "Garments & Fashion", href: "/industries/garments-fashion" },
+      { label: "Education", href: "/industries/education" },
+      { label: "Professional Services", href: "/industries/professional-services" },
     ],
   },
   {

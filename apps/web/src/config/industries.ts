@@ -5,7 +5,13 @@
 export type Industry = {
   slug: string;
   name: string;
-  href?: "/industries/retail-electronics" | "/industries/manufacturing" | "/industries/food-fmcg";
+  href?:
+    | "/industries/retail-electronics"
+    | "/industries/manufacturing"
+    | "/industries/food-fmcg"
+    | "/industries/garments-fashion"
+    | "/industries/education"
+    | "/industries/professional-services";
 };
 
 export const industries: readonly Industry[] = [
@@ -16,9 +22,13 @@ export const industries: readonly Industry[] = [
   },
   { slug: "manufacturing", name: "Manufacturing", href: "/industries/manufacturing" },
   { slug: "food-fmcg", name: "Food & FMCG", href: "/industries/food-fmcg" },
-  { slug: "garments-fashion", name: "Garments & Fashion" },
-  { slug: "education", name: "Education" },
-  { slug: "professional-services", name: "Professional Services" },
+  { slug: "garments-fashion", name: "Garments & Fashion", href: "/industries/garments-fashion" },
+  { slug: "education", name: "Education", href: "/industries/education" },
+  {
+    slug: "professional-services",
+    name: "Professional Services",
+    href: "/industries/professional-services",
+  },
 ];
 
 export const allIndustriesAction = {

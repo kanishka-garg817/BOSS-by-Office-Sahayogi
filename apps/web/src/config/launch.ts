@@ -17,6 +17,9 @@ export const liveRoutes: readonly `/${string}`[] = [
   "/industries/manufacturing",
   "/industries/food-fmcg",
   "/industries/fmcg",
+  "/industries/garments-fashion",
+  "/industries/education",
+  "/industries/professional-services",
 ];
 
 /**
